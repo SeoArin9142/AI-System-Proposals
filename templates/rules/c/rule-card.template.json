@@ -2,11 +2,13 @@
   "language": "C",
   "standard_family": "MISRA C 2012 | CERT C | Project Rule",
   "rule_id": "C-RULE-ID",
+  "rule_group": "Type System | Pointer | Control Flow | Project Group",
   "rule_title": "Rule title",
   "classification": "Required | Advisory | Mandatory | Project",
   "severity": "high | medium | low",
   "summary_ko": "규칙 한글 요약",
   "intent_ko": "이 규칙이 필요한 이유와 방지하려는 위험",
+  "domain_context_ko": "도메인/시스템 적용 맥락이 있으면 기록",
   "review_checklist": [
     "리뷰 시 확인할 항목 1",
     "리뷰 시 확인할 항목 2"

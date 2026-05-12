@@ -29,6 +29,7 @@ templates/
 - [C 규칙 카드 템플릿](rules/c/rule-card.template.json)
 - [C++ 규칙 카드 템플릿](rules/cpp/rule-card.template.json)
 - [Java 규칙 카드 템플릿](rules/java/rule-card.template.json)
+- [Gemini-Pro JSON 정규화 가이드](import-guides/gemini-pro-json-normalization.md)
 
 ## 예제 템플릿
 
