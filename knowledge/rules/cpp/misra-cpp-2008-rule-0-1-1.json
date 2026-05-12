@@ -5,19 +5,40 @@
   "rule_group": "Section 0-1",
   "rule_title": "A project shall not contain unreachable code.",
   "classification": "TBD",
-  "severity": "TBD",
+  "severity": "high",
   "validation_status": "draft-unverified",
-  "summary_ko": "TBD",
-  "intent_ko": "TBD",
-  "domain_context_ko": "TBD",
-  "review_checklist": [],
-  "common_violation_patterns": [],
-  "noncompliant_example": "TBD",
-  "compliant_example": "TBD",
-  "fix_guidance": [],
-  "sparrow_mapping": [],
-  "keywords": [],
+  "summary_ko": "도달 불가능한 코드는 죽은 분기와 설계 누락을 숨기므로 남겨두면 안 된다.",
+  "intent_ko": "실행될 수 없는 코드는 리뷰와 테스트의 신뢰성을 떨어뜨리고 실제 의도와 구현 간 불일치를 감춘다.",
+  "domain_context_ko": "안전 관련 상태 전이 코드에서 죽은 분기가 남아 있으면 비상 절차가 실제로는 호출되지 않을 수 있다.",
+  "review_checklist": [
+    "분기/루프/return 뒤에 실행될 수 없는 문장이 존재하는가",
+    "컴파일 상수나 매크로 조합 때문에 영원히 타지 않는 경로가 생기지 않았는가",
+    "예외 처리/에러 복구 코드가 도달 불가 상태로 방치되지 않았는가",
+    "불필요한 break/continue/return 중복이 코드 흐름을 왜곡하지 않는가"
+  ],
+  "common_violation_patterns": [
+    "return 다음에 남은 코드 블록",
+    "항상 참/거짓 조건 아래의 else/if 블록",
+    "switch case에서 duplicate break 이후 남은 문장"
+  ],
+  "noncompliant_example": "int process(bool ready) {\n    if (ready) {\n        return 0;\n        log_error();\n    }\n    return -1;\n}",
+  "compliant_example": "int process(bool ready) {\n    if (ready) {\n        return 0;\n    }\n    return -1;\n}",
+  "fix_guidance": [
+    "[탐지] 정적분석이 unreachable code로 보고한 문장과 제어 흐름 선행 문장을 찾는다.",
+    "[판단] 죽은 코드가 단순 잔재인지, 설계상 필요한 경로가 잘못 끊긴 것인지 확인한다.",
+    "[수정] 불필요한 문장을 제거하거나 조건/제어 흐름을 재작성해 필요한 경로가 실제 도달 가능하도록 바꾼다.",
+    "[검증] 커버리지와 경로 테스트로 모든 남은 분기가 실제 실행 가능한지 확인한다."
+  ],
+  "sparrow_mapping": [
+    "unreachableCode",
+    "duplicateBreak"
+  ],
+  "keywords": [
+    "unreachable",
+    "dead-code",
+    "control-flow"
+  ],
   "source_reference": "Klocwork MISRA C++ 2008 checker map + Cppcheck public rule coverage page where available; licensed-source verification required",
   "confidentiality": "internal",
-  "notes": "Placeholder generated from public rule numbering. Fill classification, localized summary, and mappings after licensed/internal verification."
+  "notes": "Expanded draft based on public rule text and checker identifiers. Licensed/internal verification still required."
 }

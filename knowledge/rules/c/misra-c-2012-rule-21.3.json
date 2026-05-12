@@ -11,19 +11,23 @@
   "intent_ko": "동적 메모리는 단편화, 할당 실패, 누수, 해제 오류를 만들어 장기 운용 안정성을 해친다.",
   "domain_context_ko": "방산/실시간 시스템에서는 메모리 단편화와 패닉 가능성을 원천적으로 제거하는 방향이 일반적이다.",
   "review_checklist": [
-    "malloc, calloc, realloc, free 호출이 남아 있는가",
-    "최대 크기를 기준으로 정적/지역 버퍼로 대체 가능한가"
+    "malloc/calloc/realloc/free 등 동적 메모리 API를 호출하는가",
+    "최대 크기가 예측 가능해 정적/스택 버퍼로 치환 가능한가",
+    "실패 처리, 누수, 이중 해제, use-after-free 위험이 존재하는가",
+    "실시간/장수명 시스템에서 단편화가 누적될 가능성이 있는가"
   ],
   "common_violation_patterns": [
-    "메시지 크기별 malloc 사용",
-    "동적 버퍼 해제 로직 의존"
+    "메시지 크기마다 malloc 후 free",
+    "에러 경로에서 free 누락",
+    "동적 버퍼를 전역으로 넘겨 생명주기 추적 불명확"
   ],
   "noncompliant_example": "void process_j3_2_message(uint16_t size) {\n    uint8_t *msg_buffer = (uint8_t *)malloc(size);\n    if (msg_buffer != NULL) {\n        free(msg_buffer);\n    }\n}",
   "compliant_example": "#define MAX_J3_2_MSG_SIZE 256U\nvoid process_j3_2_message(uint16_t size) {\n    uint8_t msg_buffer[MAX_J3_2_MSG_SIZE];\n    if (size <= MAX_J3_2_MSG_SIZE) {\n    }\n}",
   "fix_guidance": [
-    "동적 메모리 할당/해제 호출부를 식별한다.",
-    "최대 예상 크기를 정의해 정적 또는 지역 배열로 바꾼다.",
-    "입력 크기 경계 검사를 추가한다."
+    "[탐지] 동적 메모리 할당·해제 API 호출 위치와 호출 경로를 찾는다.",
+    "[판단] 버퍼 최대 크기와 수명 범위를 분석해 정적/지역 배열로 대체 가능한지 결정한다.",
+    "[수정] 고정 크기 버퍼, 메모리 풀, 사전 할당 구조 등 프로젝트 허용 방식으로 재설계한다.",
+    "[검증] 장시간 반복 실행에서도 누수, 단편화, 할당 실패 없이 동작하는지 확인한다."
   ],
   "sparrow_mapping": [
     "MEMORY_LEAK",

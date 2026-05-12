@@ -7,19 +7,35 @@
   "classification": "Rule",
   "severity": "Medium",
   "validation_status": "draft-unverified",
-  "summary_ko": "TBD",
-  "intent_ko": "TBD",
-  "domain_context_ko": "TBD",
-  "review_checklist": [],
-  "common_violation_patterns": [],
-  "noncompliant_example": "TBD",
-  "compliant_example": "TBD",
-  "fix_guidance": [],
+  "summary_ko": "정수 overflow를 감지하거나 예방하지 않으면 계산 결과가 조용히 wrap-around되어 잘못된 제어값을 만든다.",
+  "intent_ko": "overflow는 예외 없이 잘못된 수치 결과를 생성해 접근 제어, 버퍼 길이, 비용 계산을 모두 왜곡할 수 있다.",
+  "domain_context_ko": "카운터, 길이, 시간 계산이 overflow되면 자원 할당량이나 경계 검사 자체가 무너질 수 있다.",
+  "review_checklist": [
+    "덧셈/곱셈/증가 연산이 타입 최대값을 넘을 수 있는가",
+    "배열 길이, 시간, 비용 계산처럼 overflow가 바로 안전성 문제로 이어지는가",
+    "Math.addExact 같은 검사 API 또는 사전 범위 검사를 사용하는가",
+    "long으로 승격하거나 BigInteger 사용이 필요한 구간인가"
+  ],
+  "common_violation_patterns": [
+    "크기 합산 후 int에 저장",
+    "밀리초/초 변환 곱셈에서 overflow",
+    "반복 누적 카운터가 최대값 근처에서 증가"
+  ],
+  "noncompliant_example": "int calcLength(int a, int b) {\n    return a + b;\n}",
+  "compliant_example": "int calcLength(int a, int b) {\n    return Math.addExact(a, b);\n}",
+  "fix_guidance": [
+    "[탐지] 덧셈, 곱셈, 누적 증가 등 overflow 가능 연산을 찾는다.",
+    "[판단] 입력 범위와 사용 타입을 기준으로 wrap-around 가능성을 계산한다.",
+    "[수정] addExact/multiplyExact, 사전 경계 검사, 더 넓은 타입 사용 중 적절한 방식을 적용한다.",
+    "[검증] 최대 경계값 입력에서 예외 또는 안전 처리로 수렴하는지 테스트한다."
+  ],
   "sparrow_mapping": [],
   "keywords": [
-    "NUM00"
+    "integer-overflow",
+    "arithmetic",
+    "boundary"
   ],
   "source_reference": "SEI CERT Oracle Coding Standard for Java public rules page; internal adaptation verification required",
   "confidentiality": "internal",
-  "notes": "Placeholder generated from public CERT Java rule list. Expand summary, examples, and mappings after internal validation. Official CERT risk metadata: severity=Medium, likelihood=Unlikely, detectable=No, repairable=No, priority=P2, level=L3."
+  "notes": "Expanded draft based on public CERT Java rule title and risk metadata. Internal tool mapping still required."
 }

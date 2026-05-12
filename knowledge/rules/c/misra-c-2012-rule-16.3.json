@@ -11,19 +11,23 @@
   "intent_ko": "break 누락은 다음 case 로직까지 연쇄 실행시켜 심각한 제어 오류를 만든다.",
   "domain_context_ko": "권한 제어나 상태 전이 로직에서 누락된 break는 의도하지 않은 고위험 동작을 실행시킬 수 있다.",
   "review_checklist": [
-    "각 case 블록 끝에 break, return 등 종료 구문이 있는가",
-    "의도적 fall-through라면 프로젝트 규칙에 맞게 명시되었는가"
+    "각 case 블록이 break/return/throw 등 명시적 제어 이동으로 끝나는가",
+    "의도적 fall-through라면 프로젝트 승인 주석이나 구조가 있는가",
+    "경고/알람/무장 같은 상태 전이가 다음 case 로직까지 연쇄 실행되지 않는가",
+    "default 포함 모든 분기에서 종료 경로가 명확한가"
   ],
   "common_violation_patterns": [
-    "warning 처리 후 break 누락",
-    "다음 case 로직이 연속 실행됨"
+    "case 끝에 break 누락",
+    "의도 없는 fall-through로 다음 case 로직 실행",
+    "주석만 있고 실제 제어 이동이 없는 상태"
   ],
   "noncompliant_example": "void handle_alert(uint8_t level) {\n    switch (level) {\n        case ALERT_LOW:\n            print_warning();\n        case ALERT_HIGH:\n            trigger_alarm();\n            break;\n    }\n}",
   "compliant_example": "void handle_alert(uint8_t level) {\n    switch (level) {\n        case ALERT_LOW:\n            print_warning();\n            break;\n        case ALERT_HIGH:\n            trigger_alarm();\n            break;\n        default:\n            break;\n    }\n}",
   "fix_guidance": [
-    "fall-through가 발생하는 case 블록을 찾는다.",
-    "다음 case 진입 직전에 break 또는 적절한 종료 구문을 추가한다.",
-    "의도적 연속 실행이 필요한 경우 별도 설계 검토와 명시 규칙을 적용한다."
+    "[탐지] fall-through 또는 missing break 경고가 발생한 switch case를 찾는다.",
+    "[판단] 설계상 진짜 연속 실행이 필요한지, 단순 누락인지 코드 의도를 확인한다.",
+    "[수정] 필요 없는 fall-through는 break/return을 추가하고, 의도적이면 승인된 표기 방식으로 명확히 문서화한다.",
+    "[검증] 각 입력 상태가 정확히 해당 case 로직만 실행하는지 테스트한다."
   ],
   "sparrow_mapping": [
     "MISSING_BREAK",

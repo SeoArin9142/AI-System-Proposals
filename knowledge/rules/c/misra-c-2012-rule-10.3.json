@@ -11,19 +11,23 @@
   "intent_ko": "축소 변환은 상위 비트 손실과 범위 왜곡을 일으켜 계산 결과를 신뢰할 수 없게 만든다.",
   "domain_context_ko": "고도나 속도 같은 큰 범위 데이터를 작은 타입에 넣으면 표적 위치 인식이 틀어질 수 있다.",
   "review_checklist": [
-    "할당 좌변과 우변 타입 크기가 다른가",
-    "축소 변환 전에 범위 검사 또는 클리핑 로직이 있는가"
+    "할당/반환/인자 전달에서 더 넓은 정수형이 더 좁은 정수형으로 들어가는가",
+    "변환 전에 상한/하한 범위 검사 또는 클리핑 정책이 존재하는가",
+    "명시적 캐스팅이 단순 경고 억제용인지 실제 검토된 의도인지 확인했는가",
+    "부호 있는 값과 없는 값이 섞이며 음수/overflow 가능성이 생기지 않는가"
   ],
   "common_violation_patterns": [
     "uint32_t 값을 uint16_t에 직접 대입",
-    "명시적 의도 없이 상위 비트가 잘릴 수 있는 변환"
+    "센서 계산 결과를 작은 전송 필드로 축소 저장",
+    "함수 반환형이 작은 타입인데 내부 계산은 큰 타입으로 수행"
   ],
   "noncompliant_example": "uint32_t calculate_true_altitude(void);\nvoid process_radar(void) {\n    uint16_t target_alt = calculate_true_altitude();\n}",
   "compliant_example": "uint32_t calculate_true_altitude(void);\nvoid process_radar(void) {\n    uint32_t raw_alt = calculate_true_altitude();\n    uint16_t target_alt = 0U;\n    if (raw_alt <= 65535U) {\n        target_alt = (uint16_t)raw_alt;\n    } else {\n        target_alt = 65535U;\n    }\n}",
   "fix_guidance": [
-    "축소 변환이 발생하는 할당문을 식별한다.",
-    "대상 타입의 최대/최소 범위를 기준으로 경계 검사를 추가한다.",
-    "예외 처리 후 명시적 캐스팅을 적용한다."
+    "[탐지] 축소 변환이 발생하는 할당문, 반환문, 함수 인자 전달 지점을 찾는다.",
+    "[판단] 대상 타입 범위를 벗어날 수 있는 입력인지, 잘림 허용 정책이 있는지 확인한다.",
+    "[수정] 경계 검사 또는 클리핑 처리 후 명시적 캐스팅을 적용하고 필요 시 타입 자체를 상향 조정한다.",
+    "[검증] 최대값·최소값·음수 경계 입력으로 데이터 손실 없이 동작하는지 테스트한다."
   ],
   "sparrow_mapping": [
     "IMPLICIT_NARROWING_CONVERSION",

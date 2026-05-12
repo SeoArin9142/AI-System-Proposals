@@ -11,19 +11,23 @@
   "intent_ko": "매크로 확장 시 우선순위가 달라지면 계산 결과가 설계 의도와 다르게 왜곡될 수 있다.",
   "domain_context_ko": "좌표나 속도 계산식 같은 수치 처리에서 괄호 누락은 치명적인 오차를 유발할 수 있다.",
   "review_checklist": [
-    "매크로 매개변수가 각각 괄호로 감싸져 있는가",
-    "매크로 전체 표현식이 외곽 괄호로 감싸져 있는가"
+    "매크로 본문에서 모든 매개변수가 개별 괄호로 감싸져 있는가",
+    "매크로 전체 표현식이 한 번 더 외곽 괄호로 감싸져 있는가",
+    "연산자 우선순위 변경 시 결과가 달라질 수 있는 산술/비교식인가",
+    "함수형 매크로 대신 inline 함수로 대체 가능한가"
   ],
   "common_violation_patterns": [
-    "distance / time 형태의 직접 매크로 확장",
-    "매크로 인자에 식을 넣었을 때 우선순위 역전"
+    "#define F(x,y) x+y",
+    "매크로 인자 하나만 괄호 처리하고 전체 식은 미보호",
+    "비교/비트연산 매크로가 호출 위치 연산과 섞여 우선순위 왜곡"
   ],
   "noncompliant_example": "#define GET_SPEED(distance, time) distance / time\nvoid calc_target(void) {\n    uint32_t speed = GET_SPEED(dist_a + dist_b, 5U);\n}",
   "compliant_example": "#define GET_SPEED(distance, time) (((distance) / (time)))\nvoid calc_target(void) {\n    uint32_t speed = GET_SPEED(dist_a + dist_b, 5U);\n}",
   "fix_guidance": [
-    "매크로 선언부를 찾는다.",
-    "매개변수 식별자를 각각 괄호로 감싼다.",
-    "전체 매크로 표현식을 한 번 더 외곽 괄호로 감싼다."
+    "[탐지] 함수형 매크로 선언 중 인자 괄호 누락 경고를 찾는다.",
+    "[판단] 연산자 우선순위 왜곡이 실제 결과에 영향을 주는 호출 패턴이 있는지 확인한다.",
+    "[수정] 모든 인자를 개별 괄호로 감싸고 전체 표현식도 외곽 괄호로 감싼다. 가능하면 inline 함수로 교체한다.",
+    "[검증] 단순 값과 복합식 인자를 각각 넣어 확장 결과가 의도대로 계산되는지 확인한다."
   ],
   "sparrow_mapping": [
     "MACRO_PARENTHESIS",

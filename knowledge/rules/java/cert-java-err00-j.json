@@ -7,19 +7,35 @@
   "classification": "Rule",
   "severity": "Low",
   "validation_status": "draft-unverified",
-  "summary_ko": "TBD",
-  "intent_ko": "TBD",
-  "domain_context_ko": "TBD",
-  "review_checklist": [],
-  "common_violation_patterns": [],
-  "noncompliant_example": "TBD",
-  "compliant_example": "TBD",
-  "fix_guidance": [],
+  "summary_ko": "checked exception을 무시하거나 비워두면 실패 원인이 숨겨지고 호출자가 복구 기회를 잃는다.",
+  "intent_ko": "예외는 실패 계약의 일부이므로 삼켜 버리면 데이터 손상, 불완전한 작업, 보안 우회가 조용히 남을 수 있다.",
+  "domain_context_ko": "파일/네트워크/보안 관련 처리에서 예외를 무시하면 일부 작업만 완료된 불일치 상태가 누적될 수 있다.",
+  "review_checklist": [
+    "catch 블록이 비어 있거나 로그 없이 예외를 삼키는가",
+    "호출자에게 전파해야 할 checked exception을 임의로 무시하지 않는가",
+    "복구 가능한 예외와 즉시 실패해야 하는 예외를 구분했는가",
+    "로그를 남기더라도 상태 복구나 재전파 없이 종료하지 않는가"
+  ],
+  "common_violation_patterns": [
+    "empty catch block",
+    "TODO 주석만 있는 catch",
+    "예외를 로그만 찍고 실패 상태를 호출자에 전달하지 않음"
+  ],
+  "noncompliant_example": "try {\n    stream.close();\n} catch (IOException e) {\n}\n",
+  "compliant_example": "try {\n    stream.close();\n} catch (IOException e) {\n    logCloseFailure(e);\n    throw e;\n}\n",
+  "fix_guidance": [
+    "[탐지] 비어 있는 catch 블록과 checked exception 무시 지점을 찾는다.",
+    "[판단] 해당 예외가 복구 가능한지, 호출자 전파가 필요한지, 상태 롤백이 필요한지 결정한다.",
+    "[수정] 최소한 로깅과 상태 복구를 추가하고 필요 시 예외를 재전파하거나 래핑한다.",
+    "[검증] 예외 발생 경로에서 리소스 상태와 호출자 오류 처리가 예상대로 동작하는지 테스트한다."
+  ],
   "sparrow_mapping": [],
   "keywords": [
-    "ERR00"
+    "checked-exception",
+    "catch",
+    "error-handling"
   ],
   "source_reference": "SEI CERT Oracle Coding Standard for Java public rules page; internal adaptation verification required",
   "confidentiality": "internal",
-  "notes": "Placeholder generated from public CERT Java rule list. Expand summary, examples, and mappings after internal validation. Official CERT risk metadata: severity=Low, likelihood=Probable, detectable=Yes, repairable=No, priority=P4, level=L3."
+  "notes": "Expanded draft based on public CERT Java rule title and risk metadata. Internal tool mapping still required."
 }

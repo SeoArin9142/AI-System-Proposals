@@ -5,19 +5,40 @@
   "rule_group": "Section 0-1",
   "rule_title": "A project shall not contain unused variables.",
   "classification": "TBD",
-  "severity": "TBD",
+  "severity": "medium",
   "validation_status": "draft-unverified",
-  "summary_ko": "TBD",
-  "intent_ko": "TBD",
-  "domain_context_ko": "TBD",
-  "review_checklist": [],
-  "common_violation_patterns": [],
-  "noncompliant_example": "TBD",
-  "compliant_example": "TBD",
-  "fix_guidance": [],
-  "sparrow_mapping": [],
-  "keywords": [],
+  "summary_ko": "사용되지 않는 변수는 설계 잔재이거나 누락된 로직의 신호이므로 제거하거나 의도를 분명히 해야 한다.",
+  "intent_ko": "미사용 변수는 코드 독해를 방해하고 계산 누락, 잘못된 인터페이스 설계, 리뷰 착시를 유발한다.",
+  "domain_context_ko": "제어 알고리즘에서 계산된 값이 실제로 반영되지 않으면 안전 마진이나 보정값이 무시될 수 있다.",
+  "review_checklist": [
+    "선언된 지역/멤버 변수가 읽히거나 쓰이지 않고 남아 있는가",
+    "삭제 대상이 아니라면 TODO 성격의 미완성 로직 신호인지 확인했는가",
+    "디버그/임시 계측용 변수가 제품 코드에 남아 있지 않은가",
+    "unused 경고를 억제하기 위해 의미 없는 self-assignment를 하지 않았는가"
+  ],
+  "common_violation_patterns": [
+    "계산 결과를 저장했지만 후속 사용 없음",
+    "구조체 멤버를 추가했지만 읽는 쪽이 없음",
+    "디버깅용 임시 변수 잔존"
+  ],
+  "noncompliant_example": "void update() {\n    int correction = calculate_correction();\n    apply_nominal();\n}",
+  "compliant_example": "void update() {\n    int correction = calculate_correction();\n    apply_with_correction(correction);\n}",
+  "fix_guidance": [
+    "[탐지] unusedVariable 또는 unusedStructMember 경고가 난 선언을 찾는다.",
+    "[판단] 변수 자체가 불필요한지, 아니면 후속 로직 누락을 의미하는지 확인한다.",
+    "[수정] 불필요하면 선언을 제거하고, 필요하다면 실제 사용 지점을 연결하거나 인터페이스를 정리한다.",
+    "[검증] 제거 후 빌드와 동작이 동일한지, 또는 연결 후 기대 출력이 반영되는지 확인한다."
+  ],
+  "sparrow_mapping": [
+    "unusedVariable",
+    "unusedStructMember"
+  ],
+  "keywords": [
+    "unused-variable",
+    "dead-store",
+    "cleanup"
+  ],
   "source_reference": "Klocwork MISRA C++ 2008 checker map + Cppcheck public rule coverage page where available; licensed-source verification required",
   "confidentiality": "internal",
-  "notes": "Placeholder generated from public rule numbering. Fill classification, localized summary, and mappings after licensed/internal verification."
+  "notes": "Expanded draft based on public rule text and checker identifiers. Licensed/internal verification still required."
 }

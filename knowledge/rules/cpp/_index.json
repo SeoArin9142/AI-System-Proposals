@@ -235,5 +235,6 @@
     "misra-cpp-2008-rule-27-0-1.json"
   ],
   "source": "Klocwork MISRA C++ 2008 checker map + Cppcheck public rule coverage page",
-  "notes": "All files are placeholders unless separately expanded. Classification and wording require licensed/internal verification."
+  "notes": "All files are placeholders unless separately expanded. Classification and wording require licensed/internal verification.",
+  "expanded_draft_count": 3
 }

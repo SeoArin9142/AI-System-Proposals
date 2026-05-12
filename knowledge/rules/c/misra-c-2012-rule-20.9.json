@@ -11,19 +11,23 @@
   "intent_ko": "정의되지 않은 매크로는 0으로 평가되어 엉뚱한 컴파일 분기를 조용히 선택할 수 있다.",
   "domain_context_ko": "장비 버전별 펌웨어 로직 분기에서 잘못된 조건식은 다른 장비용 코드가 탑재되는 사고로 이어질 수 있다.",
   "review_checklist": [
-    "#if 또는 #elif에서 매크로 정의 여부를 먼저 확인하는가",
-    "defined(MACRO)와 값 비교가 함께 들어가는가"
+    "#if 또는 #elif에서 정의 여부 확인 없이 매크로 값을 직접 비교하는가",
+    "정의되지 않은 매크로가 0으로 평가되어 잘못된 빌드 분기를 타지 않는가",
+    "defined(MACRO)와 값 비교가 함께 사용되는가",
+    "플랫폼/장비별 컴파일 플래그 문서와 실제 코드가 일치하는가"
   ],
   "common_violation_patterns": [
-    "#if MACRO == 1 형태의 직접 비교",
-    "정의 여부 미검사로 기본값 0 평가"
+    "#if FEATURE_X == 1",
+    "#elif BOARD_REV > 2 /* 미정의 가능 */",
+    "조건부 컴파일에서 else가 사실상 기본 장비 로직을 강제"
   ],
   "noncompliant_example": "#if RADAR_VERSION_B == 1\n    init_new_radar_protocol();\n#else\n    init_legacy_protocol();\n#endif",
   "compliant_example": "#if defined(RADAR_VERSION_B) && (RADAR_VERSION_B == 1)\n    init_new_radar_protocol();\n#else\n    init_legacy_protocol();\n#endif",
   "fix_guidance": [
-    "조건식에 사용된 매크로를 식별한다.",
-    "단순 비교를 defined(MACRO) && (...) 형태로 바꾼다.",
-    "모든 전처리 분기에 동일 규칙을 적용한다."
+    "[탐지] 전처리 조건식에서 매크로 정의 여부를 선행 확인하지 않는 코드를 찾는다.",
+    "[판단] 해당 매크로가 모든 빌드 조합에서 항상 정의되는지, 일부 장비에서 미정의인지 확인한다.",
+    "[수정] defined(MACRO) 검사를 추가하고 값 비교는 괄호로 분리한다.",
+    "[검증] 매크로 정의/미정의 양쪽 빌드 조합에서 올바른 코드 경로가 선택되는지 확인한다."
   ],
   "sparrow_mapping": [
     "UNDEF_MACRO_USE",

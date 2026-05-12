@@ -11,19 +11,23 @@
   "intent_ko": "경계 밖 접근은 메모리 오염과 버퍼 오버플로우를 일으켜 시스템 신뢰성을 붕괴시킨다.",
   "domain_context_ko": "전술 데이터 버퍼나 항적 배열을 잘못 접근하면 인접 메모리를 덮어써 다른 항적 정보까지 오염시킬 수 있다.",
   "review_checklist": [
-    "배열 접근 전에 인덱스 범위 검사가 있는가",
-    "배열 크기 상수와 조건식이 일치하는가"
+    "배열 인덱스와 버퍼 길이 사이에 경계 검사가 존재하는가",
+    "루프 종결 조건이 <= / < 를 혼동해 마지막 원소를 넘지 않는가",
+    "외부 입력이나 계산식이 직접 인덱스로 사용될 때 상한이 제한되는가",
+    "읽기와 쓰기 모두에 대해 동일한 크기 상수가 사용되는가"
   ],
   "common_violation_patterns": [
-    "외부 입력 인덱스를 검증 없이 배열에 사용",
-    "상수 크기 변경 후 조건식 미갱신"
+    "index 값을 검증 없이 배열에 직접 사용",
+    "for 루프 종료 조건 오프바이원",
+    "패킷 길이 기반 복사에서 목적 버퍼 크기 미검사"
   ],
   "noncompliant_example": "void update_track(uint16_t index, uint32_t data) {\n    uint32_t track_buffer[100];\n    track_buffer[index] = data;\n}",
   "compliant_example": "void update_track(uint16_t index, uint32_t data) {\n    uint32_t track_buffer[100];\n    if (index < 100U) {\n        track_buffer[index] = data;\n    }\n}",
   "fix_guidance": [
-    "배열 접근에 사용된 인덱스 변수를 식별한다.",
-    "배열 최대 크기를 기준으로 경계 검사를 추가한다.",
-    "쓰기/읽기 직전에 방어 조건문을 삽입한다."
+    "[탐지] 배열 접근과 포인터 오프셋 계산이 있는 지점을 찾는다.",
+    "[판단] 인덱스 출처가 외부 입력인지 내부 계산인지, 음수/상한 초과 가능성이 있는지 검토한다.",
+    "[수정] 상한 검사, 길이 매크로, 안전 복사 API 등 경계 보호 로직을 추가한다.",
+    "[검증] 최소/최대/초과 인덱스 값으로 메모리 오염 없이 동작하는지 테스트한다."
   ],
   "sparrow_mapping": [
     "OUT_OF_BOUNDS",

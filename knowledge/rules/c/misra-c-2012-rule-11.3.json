@@ -11,19 +11,23 @@
   "intent_ko": "정렬 문제와 strict aliasing 위반은 잘못된 데이터 해석과 런타임 오류를 유발한다.",
   "domain_context_ko": "수신 메시지 바이트 배열을 큰 정수형이나 구조체 포인터로 바로 바꾸면 CPU 아키텍처 차이에 따라 오동작할 수 있다.",
   "review_checklist": [
-    "uint8_t *를 다른 타입 포인터로 직접 캐스팅하고 있는가",
-    "memcpy 같은 안전한 추출 방식으로 대체 가능한가"
+    "바이트 버퍼나 객체 포인터를 다른 타입 포인터로 직접 캐스팅하는가",
+    "정렬(alignment) 보장이 없는 메모리를 더 큰 타입으로 읽고 있지 않은가",
+    "strict aliasing 위반으로 최적화 시 오동작할 가능성이 있는가",
+    "memcpy 또는 명시적 field-by-field decoding으로 대체 가능한가"
   ],
   "common_violation_patterns": [
-    "raw byte buffer를 uint32_t *로 캐스팅",
-    "타입 퍼닝을 위한 포인터 재해석"
+    "uint8_t*를 uint32_t*로 강제 변환",
+    "네트워크 패킷 버퍼를 구조체 포인터로 직접 해석",
+    "공용체/캐스팅으로 타입 punning 수행"
   ],
   "noncompliant_example": "void parse_message(uint8_t *raw_data) {\n    uint32_t *header = (uint32_t *)raw_data;\n    uint32_t msg_id = *header;\n}",
   "compliant_example": "void parse_message(uint8_t *raw_data) {\n    uint32_t msg_id;\n    (void)memcpy(&msg_id, raw_data, sizeof(msg_id));\n}",
   "fix_guidance": [
-    "다른 타입 포인터로의 강제 캐스팅 위치를 찾는다.",
-    "대상 타입 지역 변수를 선언한다.",
-    "memcpy를 사용해 바이트 데이터를 안전하게 복사하도록 수정한다."
+    "[탐지] 포인터 타입 캐스팅으로 데이터를 재해석하는 코드를 찾는다.",
+    "[판단] 정렬 보장, aliasing, endian 처리까지 포함해 안전한 재해석인지 검토한다.",
+    "[수정] 목적 타입의 지역 변수에 memcpy 하거나 명시적 디코딩 로직으로 교체한다.",
+    "[검증] 서로 다른 아키텍처와 최적화 옵션에서 동일 결과가 나오는지 확인한다."
   ],
   "sparrow_mapping": [
     "STRICT_ALIASING_VIOLATION",

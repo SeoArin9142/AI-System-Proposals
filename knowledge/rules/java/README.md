@@ -8,6 +8,7 @@
 validation_status = mixed-draft
 rule_count = 174
 group_count = 19
+expanded_draft_count = 3
 ```
 
 의미:

@@ -8,6 +8,7 @@
 validation_status = mixed-draft
 rule_count = 228
 title_coverage_count = 216
+expanded_draft_count = 3
 ```
 
 의미:
