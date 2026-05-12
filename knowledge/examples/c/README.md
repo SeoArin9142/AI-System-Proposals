@@ -8,6 +8,7 @@
 validation_status = mixed-draft
 benchmark_count = 12
 standard_family = MISRA C 2012
+schema_version = 1.1
 ```
 
 ## 권장 내용
@@ -16,6 +17,7 @@ standard_family = MISRA C 2012
 - `primary_rule` 1개
 - `decision` 포함
 - `explanation_ko`와 `fix_guidance` 포함
+- `review_focus` / `must_mention` / `acceptance_checks` 포함
 
 ## 다음 단계
 
@@ -27,3 +29,14 @@ standard_family = MISRA C 2012
 ## 현재 생성 파일
 
 - `reviewer-benchmark.v1.jsonl` (12건)
+
+## 현재 JSONL 필드
+
+- `benchmark_id`
+- `metadata.schema_version`
+- `input.rule_group`
+- `input.risk_context`
+- `expected.review_focus`
+- `expected.must_mention`
+- `expected.noncompliant_signals`
+- `expected.acceptance_checks`
