@@ -38,6 +38,8 @@
 - [C Reviewer benchmark 구조](knowledge/examples/c/README.md)
 - [C++ Reviewer benchmark 구조](knowledge/examples/cpp/README.md)
 - [Java Reviewer benchmark 구조](knowledge/examples/java/README.md)
+- [규칙 JSON 검증 스크립트](scripts/validate_rule_json.py)
+- [benchmark JSONL 검증 스크립트](scripts/validate_benchmark_jsonl.py)
 
 ## 구축안 요약
 

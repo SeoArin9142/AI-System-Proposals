@@ -17,6 +17,8 @@
 - 01:25: C++ README / index 동기화
 - 01:26~01:34: Java 규칙 7건(DCL00/ERR08/FIO02/IDS00/NUM01/OBJ09/SEC00) 상세 확장
 - 01:35: Java README / index 동기화
+- 01:36~01:42: 규칙 JSON / benchmark JSONL 검증 스크립트 2종 추가
+- 01:43: 전체 규칙 JSON, C benchmark JSONL 검증 실행
 
 ## 작업 1 결과
 
@@ -50,3 +52,14 @@
 
 - Java expanded_draft_count = 10 확인 예정
 - 신규 7건 JSON 파싱 확인 예정
+
+## 작업 4 결과
+
+- `scripts/validate_rule_json.py` 추가
+- `scripts/validate_benchmark_jsonl.py` 추가
+- 규칙 파일 수, 필수 필드, index count, benchmark count 검증 가능
+
+## 작업 4 검증 메모
+
+- `rule_json_validation=ok`
+- `benchmark_jsonl_validation=ok`
