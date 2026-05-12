@@ -1,0 +1,25 @@
+{
+  "language": "Java",
+  "standard_family": "CERT Java",
+  "rule_id": "CERT-Java-LCK03-J",
+  "rule_group": "Locking (LCK)",
+  "rule_title": "Do not synchronize on the intrinsic locks of high-level concurrency objects",
+  "classification": "Rule",
+  "severity": "Medium",
+  "validation_status": "draft-unverified",
+  "summary_ko": "TBD",
+  "intent_ko": "TBD",
+  "domain_context_ko": "TBD",
+  "review_checklist": [],
+  "common_violation_patterns": [],
+  "noncompliant_example": "TBD",
+  "compliant_example": "TBD",
+  "fix_guidance": [],
+  "sparrow_mapping": [],
+  "keywords": [
+    "LCK03"
+  ],
+  "source_reference": "SEI CERT Oracle Coding Standard for Java public rules page; internal adaptation verification required",
+  "confidentiality": "internal",
+  "notes": "Placeholder generated from public CERT Java rule list. Expand summary, examples, and mappings after internal validation. Official CERT risk metadata: severity=Medium, likelihood=Probable, detectable=Yes, repairable=No, priority=P8, level=L2."
+}

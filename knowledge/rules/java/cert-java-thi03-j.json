@@ -1,0 +1,25 @@
+{
+  "language": "Java",
+  "standard_family": "CERT Java",
+  "rule_id": "CERT-Java-THI03-J",
+  "rule_group": "Thread APIs (THI)",
+  "rule_title": "Always invoke wait() and await() methods inside a loop",
+  "classification": "Rule",
+  "severity": "Low",
+  "validation_status": "draft-unverified",
+  "summary_ko": "TBD",
+  "intent_ko": "TBD",
+  "domain_context_ko": "TBD",
+  "review_checklist": [],
+  "common_violation_patterns": [],
+  "noncompliant_example": "TBD",
+  "compliant_example": "TBD",
+  "fix_guidance": [],
+  "sparrow_mapping": [],
+  "keywords": [
+    "THI03"
+  ],
+  "source_reference": "SEI CERT Oracle Coding Standard for Java public rules page; internal adaptation verification required",
+  "confidentiality": "internal",
+  "notes": "Placeholder generated from public CERT Java rule list. Expand summary, examples, and mappings after internal validation. Official CERT risk metadata: severity=Low, likelihood=Unlikely, detectable=Yes, repairable=No, priority=P2, level=L3."
+}

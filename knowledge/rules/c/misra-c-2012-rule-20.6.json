@@ -1,0 +1,23 @@
+{
+  "language": "C",
+  "standard_family": "MISRA C 2012",
+  "rule_id": "MISRA-C-2012-Rule-20.6",
+  "rule_group": "TBD",
+  "rule_title": "TBD",
+  "classification": "Required",
+  "severity": "TBD",
+  "validation_status": "draft-unverified",
+  "summary_ko": "TBD",
+  "intent_ko": "TBD",
+  "domain_context_ko": "TBD",
+  "review_checklist": [],
+  "common_violation_patterns": [],
+  "noncompliant_example": "TBD",
+  "compliant_example": "TBD",
+  "fix_guidance": [],
+  "sparrow_mapping": [],
+  "keywords": [],
+  "source_reference": "Klocwork MISRA C:2012 enforcement index + internal verification required",
+  "confidentiality": "internal",
+  "notes": "Placeholder generated from public rule numbering and category. Fill after licensed/internal verification."
+}

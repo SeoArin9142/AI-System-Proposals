@@ -1,0 +1,25 @@
+{
+  "language": "Java",
+  "standard_family": "CERT Java",
+  "rule_id": "CERT-Java-TPS04-J",
+  "rule_group": "Thread Pools (TPS)",
+  "rule_title": "Ensure ThreadLocal variables are reinitialized when using thread pools",
+  "classification": "Rule",
+  "severity": "Medium",
+  "validation_status": "draft-unverified",
+  "summary_ko": "TBD",
+  "intent_ko": "TBD",
+  "domain_context_ko": "TBD",
+  "review_checklist": [],
+  "common_violation_patterns": [],
+  "noncompliant_example": "TBD",
+  "compliant_example": "TBD",
+  "fix_guidance": [],
+  "sparrow_mapping": [],
+  "keywords": [
+    "TPS04"
+  ],
+  "source_reference": "SEI CERT Oracle Coding Standard for Java public rules page; internal adaptation verification required",
+  "confidentiality": "internal",
+  "notes": "Placeholder generated from public CERT Java rule list. Expand summary, examples, and mappings after internal validation. Official CERT risk metadata: severity=Medium, likelihood=Probable, detectable=Yes, repairable=No, priority=P8, level=L2."
+}

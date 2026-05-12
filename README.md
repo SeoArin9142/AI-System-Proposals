@@ -30,7 +30,12 @@
 
 ### 규칙 데이터 템플릿
 - [규칙/예제 템플릿 안내](templates/README.md)
-- [정규화된 C 규칙 카드 초안](knowledge/rules/c/README.md)
+- [정규화된 C 규칙 카드 초안 (MISRA C 2012: 158 Rules + 17 Directives)](knowledge/rules/c/README.md)
+- [정규화된 C++ 규칙 카드 구조 (MISRA C++ 2008: 228 Rules)](knowledge/rules/cpp/README.md)
+- [정규화된 Java 규칙 카드 구조 (CERT Java: 174 Rules)](knowledge/rules/java/README.md)
+- [C Reviewer benchmark 구조](knowledge/examples/c/README.md)
+- [C++ Reviewer benchmark 구조](knowledge/examples/cpp/README.md)
+- [Java Reviewer benchmark 구조](knowledge/examples/java/README.md)
 
 ## 구축안 요약
 

@@ -1,0 +1,25 @@
+{
+  "language": "Java",
+  "standard_family": "CERT Java",
+  "rule_id": "CERT-Java-IDS17-J",
+  "rule_group": "Input Validation and Data Sanitization (IDS)",
+  "rule_title": "Prevent XML External Entity Attacks",
+  "classification": "Rule",
+  "severity": "Medium",
+  "validation_status": "draft-unverified",
+  "summary_ko": "TBD",
+  "intent_ko": "TBD",
+  "domain_context_ko": "TBD",
+  "review_checklist": [],
+  "common_violation_patterns": [],
+  "noncompliant_example": "TBD",
+  "compliant_example": "TBD",
+  "fix_guidance": [],
+  "sparrow_mapping": [],
+  "keywords": [
+    "IDS17"
+  ],
+  "source_reference": "SEI CERT Oracle Coding Standard for Java public rules page; internal adaptation verification required",
+  "confidentiality": "internal",
+  "notes": "Placeholder generated from public CERT Java rule list. Expand summary, examples, and mappings after internal validation. Official CERT risk metadata: severity=Medium, likelihood=Probable, detectable=No, repairable=No, priority=P4, level=L3."
+}

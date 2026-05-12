@@ -1,0 +1,23 @@
+{
+  "language": "C++",
+  "standard_family": "MISRA C++ 2008",
+  "rule_id": "MISRA-CPP-2008-Rule-16-0-1",
+  "rule_group": "Section 16-0",
+  "rule_title": "#include directives in a file shall only be preceded by other pre-processor directives or comments.",
+  "classification": "TBD",
+  "severity": "TBD",
+  "validation_status": "draft-unverified",
+  "summary_ko": "TBD",
+  "intent_ko": "TBD",
+  "domain_context_ko": "TBD",
+  "review_checklist": [],
+  "common_violation_patterns": [],
+  "noncompliant_example": "TBD",
+  "compliant_example": "TBD",
+  "fix_guidance": [],
+  "sparrow_mapping": [],
+  "keywords": [],
+  "source_reference": "Klocwork MISRA C++ 2008 checker map + Cppcheck public rule coverage page where available; licensed-source verification required",
+  "confidentiality": "internal",
+  "notes": "Placeholder generated from public rule numbering. Fill classification, localized summary, and mappings after licensed/internal verification."
+}
