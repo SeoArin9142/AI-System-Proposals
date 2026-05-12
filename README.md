@@ -38,8 +38,11 @@
 - [C Reviewer benchmark 구조](knowledge/examples/c/README.md)
 - [C++ Reviewer benchmark 구조](knowledge/examples/cpp/README.md)
 - [Java Reviewer benchmark 구조](knowledge/examples/java/README.md)
+- [폐쇄망 반입용 pack 구조](pack/README.md)
+- [pack 생성 스크립트](scripts/build_pack.py)
 - [규칙 JSON 검증 스크립트](scripts/validate_rule_json.py)
 - [benchmark JSONL 검증 스크립트](scripts/validate_benchmark_jsonl.py)
+- [pack 검증 스크립트](scripts/validate_pack.py)
 
 ## 구축안 요약
 

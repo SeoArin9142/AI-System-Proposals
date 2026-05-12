@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "package_name": "closed-network-llm-bootstrap-pack",
+  "purpose": "model-agnostic bootstrap package for RAG, eval, and later SFT adaptation",
+  "artifacts": {
+    "kb_manifest": "kb/rules_manifest.json",
+    "eval_manifest": "eval/eval_manifest.json",
+    "sft_manifest": "sft/dataset_manifest.json",
+    "system_prompt": "sft/system_prompt.md",
+    "validator": "tools/validate_pack.py"
+  },
+  "counts": {
+    "rule_cards": 577,
+    "eval_records": 12,
+    "sft_records": 12
+  },
+  "notes": [
+    "이 패키지는 원본 knowledge 데이터를 재구성한 export 결과다.",
+    "모델 구매 후 벤더 포맷이 정해지면 이 패키지 기준으로 최종 변환한다."
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "format": "instruction-input-output",
+  "purpose": "seed SFT dataset for later model-specific conversion",
+  "split_counts": {
+    "train": 8,
+    "val": 2,
+    "test": 2,
+    "total": 12
+  },
+  "source": {
+    "language": "C",
+    "standard_family": "MISRA C 2012",
+    "benchmark_file": "knowledge/examples/c/reviewer-benchmark.v1.jsonl"
+  },
+  "notes": [
+    "현재는 C benchmark 12건만 seed dataset으로 포함한다.",
+    "모델 벤더별 포맷 요구가 있으면 train/val/test를 후처리해서 맞춘다.",
+    "실제 fine-tuning 전에는 validation_status와 정답 품질을 추가 검증해야 한다."
+  ]
+}

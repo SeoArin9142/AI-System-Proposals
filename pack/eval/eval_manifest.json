@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.1",
+  "purpose": "evaluation and few-shot seed datasets",
+  "benchmarks": {
+    "C": {
+      "standard_family": "MISRA C 2012",
+      "file": "benchmark_c.jsonl",
+      "count": 12,
+      "source_index": "knowledge/examples/c/_index.json",
+      "validation_status": "mixed-draft"
+    },
+    "C++": {
+      "standard_family": "MISRA C++ 2008",
+      "file": "benchmark_cpp.jsonl",
+      "count": 0,
+      "source_index": "knowledge/examples/cpp/_index.json",
+      "validation_status": "structure-ready"
+    },
+    "Java": {
+      "standard_family": "CERT Java",
+      "file": "benchmark_java.jsonl",
+      "count": 0,
+      "source_index": "knowledge/examples/java/_index.json",
+      "validation_status": "structure-ready"
+    }
+  }
+}
