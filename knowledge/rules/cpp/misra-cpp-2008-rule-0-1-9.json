@@ -5,19 +5,37 @@
   "rule_group": "Section 0-1",
   "rule_title": "There shall be no dead code",
   "classification": "TBD",
-  "severity": "TBD",
+  "severity": "high",
   "validation_status": "draft-unverified",
-  "summary_ko": "TBD",
-  "intent_ko": "TBD",
-  "domain_context_ko": "TBD",
-  "review_checklist": [],
-  "common_violation_patterns": [],
-  "noncompliant_example": "TBD",
-  "compliant_example": "TBD",
-  "fix_guidance": [],
+  "summary_ko": "dead code는 유지하지 말고 제거하거나 실제로 필요한 흐름으로 복구해야 한다.",
+  "intent_ko": "절대 실행되지 않는 죽은 코드는 설계 불일치와 기능 폐기를 숨기며 리뷰 신뢰성을 낮춘다.",
+  "domain_context_ko": "비상 절차, fallback, 장비 분기 코드가 dead code로 남아 있으면 실제 운용에서 필요한 복구 경로가 사라질 수 있다.",
+  "review_checklist": [
+    "컴파일 상수, 매크로, 고정 조건 때문에 절대 실행되지 않는 블록이 있는가",
+    "기능 제거 후 남은 잔재 분기나 루프가 있는가",
+    "예외/에러 복구 경로가 선언만 되고 호출되지 않는 dead path가 아닌가",
+    "테스트 커버리지에서 영구 미도달 블록이 반복적으로 나타나는가"
+  ],
+  "common_violation_patterns": [
+    "#if 0 형태의 영구 비활성 코드",
+    "항상 false인 feature flag 아래 남은 블록",
+    "리팩터링 후 더 이상 연결되지 않는 fallback path"
+  ],
+  "noncompliant_example": "void run(bool featureEnabled) {\n    if (false) {\n        emergencyMode();\n    }\n    execute();\n}",
+  "compliant_example": "void run(void) {\n    execute();\n}",
+  "fix_guidance": [
+    "[탐지] dead code 경고와 커버리지 0% 블록을 함께 확인한다.",
+    "[판단] 삭제 가능한 잔재인지, 연결이 끊긴 설계 경로인지 원인을 분리한다.",
+    "[수정] 잔재는 제거하고 필요한 기능이면 호출/조건/구성을 수정해 실제 경로로 복원한다.",
+    "[검증] 제거 또는 복구 후 커버리지와 정적분석에서 dead code 경고가 사라지는지 확인한다."
+  ],
   "sparrow_mapping": [],
-  "keywords": [],
+  "keywords": [
+    "dead-code",
+    "inactive-branch",
+    "coverage-gap"
+  ],
   "source_reference": "Klocwork MISRA C++ 2008 checker map + Cppcheck public rule coverage page where available; licensed-source verification required",
   "confidentiality": "internal",
-  "notes": "Placeholder generated from public rule numbering. Fill classification, localized summary, and mappings after licensed/internal verification."
+  "notes": "Expanded draft based on public rule title. Internal review still required."
 }

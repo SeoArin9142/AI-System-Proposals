@@ -5,19 +5,37 @@
   "rule_group": "Section 0-1",
   "rule_title": "A project shall not contain non-volatile POD variables having only one use.",
   "classification": "TBD",
-  "severity": "TBD",
+  "severity": "medium",
   "validation_status": "draft-unverified",
-  "summary_ko": "TBD",
-  "intent_ko": "TBD",
-  "domain_context_ko": "TBD",
-  "review_checklist": [],
-  "common_violation_patterns": [],
-  "noncompliant_example": "TBD",
-  "compliant_example": "TBD",
-  "fix_guidance": [],
+  "summary_ko": "한 번만 사용되는 non-volatile POD 변수는 불필요한 중간 상태를 만들어 데이터 흐름을 흐리므로 줄여야 한다.",
+  "intent_ko": "임시 POD 변수가 한 번만 읽히고 사라지면 코드가 장황해지고 실제 의도보다 저장 상태가 더 있는 것처럼 보이게 된다.",
+  "domain_context_ko": "센서 값이나 상태 코드를 임시 변수에 담아 한 번만 비교하는 패턴이 많아지면 검토자가 실제 핵심 분기를 빠르게 읽기 어렵다.",
+  "review_checklist": [
+    "non-volatile POD 지역 변수가 대입 후 한 번만 사용되는가",
+    "임시 변수 제거 시 표현식 가독성이 유지되는가",
+    "디버깅 편의만을 위해 불필요한 저장 상태를 남기고 있지 않은가",
+    "반복 계산 방지 목적이라면 실제로 두 번 이상 사용되는지 확인했는가"
+  ],
+  "common_violation_patterns": [
+    "함수 반환값을 임시 int/bool 변수에 담아 바로 한 번만 비교",
+    "상수 계산 결과를 지역 변수에 저장 후 즉시 반환",
+    "조건식 직전의 one-shot snapshot 변수"
+  ],
+  "noncompliant_example": "void check_limit() {\n    int speed = readSpeed();\n    if (speed > limit) {\n        raiseAlarm();\n    }\n}",
+  "compliant_example": "void check_limit() {\n    if (readSpeed() > limit) {\n        raiseAlarm();\n    }\n}",
+  "fix_guidance": [
+    "[탐지] POD 지역 변수 중 대입 후 한 번만 사용되는 변수를 찾는다.",
+    "[판단] 재사용, 디버깅, 가독성 목적이 실제로 존재하는지 검토한다.",
+    "[수정] 단일 사용 변수는 직접 표현식, 상수 함수, 또는 더 의미 있는 이름의 함수로 치환한다.",
+    "[검증] 변수 제거 후 평가 순서와 부작용이 바뀌지 않았는지 테스트한다."
+  ],
   "sparrow_mapping": [],
-  "keywords": [],
+  "keywords": [
+    "single-use",
+    "pod",
+    "temporary-variable"
+  ],
   "source_reference": "Klocwork MISRA C++ 2008 checker map + Cppcheck public rule coverage page where available; licensed-source verification required",
   "confidentiality": "internal",
-  "notes": "Placeholder generated from public rule numbering. Fill classification, localized summary, and mappings after licensed/internal verification."
+  "notes": "Expanded draft based on public rule title. Internal review still required."
 }

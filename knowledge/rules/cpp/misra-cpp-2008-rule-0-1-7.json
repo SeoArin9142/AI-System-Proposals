@@ -5,19 +5,37 @@
   "rule_group": "Section 0-1",
   "rule_title": "The value returned by a function having a non-void return type that is not an overloaded operator shall always be used.",
   "classification": "TBD",
-  "severity": "TBD",
+  "severity": "high",
   "validation_status": "draft-unverified",
-  "summary_ko": "TBD",
-  "intent_ko": "TBD",
-  "domain_context_ko": "TBD",
-  "review_checklist": [],
-  "common_violation_patterns": [],
-  "noncompliant_example": "TBD",
-  "compliant_example": "TBD",
-  "fix_guidance": [],
+  "summary_ko": "non-void 함수의 반환값은 항상 검토하거나 사용해야 하며 무시해서는 안 된다.",
+  "intent_ko": "반환값은 성공 여부, 새 상태, 정규화된 값을 담는 경우가 많아서 버리면 오류 감지가 사라진다.",
+  "domain_context_ko": "검증 함수, 범위 체크 함수, 변환 함수의 반환값을 무시하면 안전 상태 전환이나 오류 복구가 누락될 수 있다.",
+  "review_checklist": [
+    "non-void 함수 호출 결과가 변수, 분기, 반환문에 실제로 연결되는가",
+    "오버로드 연산자가 아닌 일반 함수의 반환값을 statement 단독 호출로 버리지 않는가",
+    "immutable 객체나 정규화 함수의 새 반환 객체를 놓치지 않는가",
+    "성공/실패 코드를 무시해 에러 처리가 누락되지 않는가"
+  ],
+  "common_violation_patterns": [
+    "validate() 또는 normalize() 호출 결과를 버림",
+    "compare/convert 결과를 저장하지 않고 다음 단계 진행",
+    "factory 함수 반환 객체를 받지 않고 즉시 폐기"
+  ],
+  "noncompliant_example": "void process() {\n    normalizeConfig();\n    checkBoundary();\n}",
+  "compliant_example": "void process() {\n    Config cfg = normalizeConfig();\n    if (!checkBoundary(cfg)) {\n        raiseAlarm();\n    }\n}",
+  "fix_guidance": [
+    "[탐지] 반환형이 void가 아닌 함수 호출 중 결과를 버리는 구문을 찾는다.",
+    "[판단] 반환값이 상태, 오류, 새 객체 중 무엇을 의미하는지 API 계약을 확인한다.",
+    "[수정] 반환값을 변수/분기/호출자 반환으로 연결하고 필요 시 무시 불가 인터페이스로 감싼다.",
+    "[검증] 실패 코드와 변환 결과가 실제 제어 흐름에 반영되는지 테스트한다."
+  ],
   "sparrow_mapping": [],
-  "keywords": [],
+  "keywords": [
+    "return-value",
+    "ignored-result",
+    "api-contract"
+  ],
   "source_reference": "Klocwork MISRA C++ 2008 checker map + Cppcheck public rule coverage page where available; licensed-source verification required",
   "confidentiality": "internal",
-  "notes": "Placeholder generated from public rule numbering. Fill classification, localized summary, and mappings after licensed/internal verification."
+  "notes": "Expanded draft based on public rule title. Internal review still required."
 }

@@ -8,7 +8,7 @@
 validation_status = mixed-draft
 rule_count = 228
 title_coverage_count = 216
-expanded_draft_count = 3
+expanded_draft_count = 10
 ```
 
 의미:
@@ -25,6 +25,6 @@ expanded_draft_count = 3
 ## 다음 단계
 
 1. 라이선스 허용 범위 내 rule title / classification 검증
-2. 현업 C++ 위반 예제 수집
+2. 현재 확장된 10건의 checklist / example / fix_guidance 현업 검토
 3. Sparrow 또는 대응 정적분석 export와 mapping 정리
 4. Reviewer benchmark JSONL 생성

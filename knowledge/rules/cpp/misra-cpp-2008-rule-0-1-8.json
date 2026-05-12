@@ -5,19 +5,37 @@
   "rule_group": "Section 0-1",
   "rule_title": "All functions with void return type shall have external side effect(s).",
   "classification": "TBD",
-  "severity": "TBD",
+  "severity": "medium",
   "validation_status": "draft-unverified",
-  "summary_ko": "TBD",
-  "intent_ko": "TBD",
-  "domain_context_ko": "TBD",
-  "review_checklist": [],
-  "common_violation_patterns": [],
-  "noncompliant_example": "TBD",
-  "compliant_example": "TBD",
-  "fix_guidance": [],
+  "summary_ko": "void 함수는 외부 가시 부작용이 있어야 하며, 내부 계산만 하고 끝나는 구조는 피해야 한다.",
+  "intent_ko": "아무 값도 반환하지 않고 외부 상태도 바꾸지 않는 함수는 호출 의미가 불명확하고 설계 잡음을 만든다.",
+  "domain_context_ko": "제어 로직에서 void helper가 단지 지역 변수만 바꾸고 끝나면 호출자가 결과를 얻지 못해 동작 누락이 생긴다.",
+  "review_checklist": [
+    "void 함수가 전역/멤버/출력 인자/로그 등 외부 관찰 가능한 효과를 가지는가",
+    "단순 계산 결과만 만들고 호출자에 전달하지 않는 helper가 아닌가",
+    "반환값이 더 적절한 설계인데 void로 숨기고 있지 않은가",
+    "테스트 관점에서 함수 실행 결과를 외부에서 검증할 수 있는가"
+  ],
+  "common_violation_patterns": [
+    "void 함수 내부에서 지역 변수만 계산하고 종료",
+    "계산 helper를 void로 두고 호출자에 결과 전달 누락",
+    "ref/out 매개변수 없이 아무 상태도 바꾸지 않는 procedure 스타일 함수"
+  ],
+  "noncompliant_example": "void normalize(int value) {\n    value = value / 2;\n}",
+  "compliant_example": "int normalize(int value) {\n    return value / 2;\n}",
+  "fix_guidance": [
+    "[탐지] void 함수 중 외부 가시 효과가 없는 함수를 찾는다.",
+    "[판단] 실제 의도가 상태 변경인지 값 계산인지 분리한다.",
+    "[수정] 계산 함수라면 반환값을 주도록 바꾸고, 절차 함수라면 외부 상태 변경이 명확히 드러나게 재설계한다.",
+    "[검증] 호출자가 함수 실행 결과를 실제로 활용하거나 관찰할 수 있는지 테스트한다."
+  ],
   "sparrow_mapping": [],
-  "keywords": [],
+  "keywords": [
+    "void-function",
+    "side-effect",
+    "api-design"
+  ],
   "source_reference": "Klocwork MISRA C++ 2008 checker map + Cppcheck public rule coverage page where available; licensed-source verification required",
   "confidentiality": "internal",
-  "notes": "Placeholder generated from public rule numbering. Fill classification, localized summary, and mappings after licensed/internal verification."
+  "notes": "Expanded draft based on public rule title. Internal review still required."
 }

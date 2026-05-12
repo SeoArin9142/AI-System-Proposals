@@ -5,19 +5,37 @@
   "rule_group": "Section 0-1",
   "rule_title": "A project shall not contain unused type declarations.",
   "classification": "TBD",
-  "severity": "TBD",
+  "severity": "low",
   "validation_status": "draft-unverified",
-  "summary_ko": "TBD",
-  "intent_ko": "TBD",
-  "domain_context_ko": "TBD",
-  "review_checklist": [],
-  "common_violation_patterns": [],
-  "noncompliant_example": "TBD",
-  "compliant_example": "TBD",
-  "fix_guidance": [],
+  "summary_ko": "사용되지 않는 타입 선언은 설계 잔재를 남기고 코드 탐색 비용만 늘리므로 제거해야 한다.",
+  "intent_ko": "더 이상 참조되지 않는 typedef, class, enum 선언은 유지보수자에게 잘못된 의존성을 암시한다.",
+  "domain_context_ko": "프로토콜 버전 변경 후 남은 메시지 구조체나 enum 선언이 실제 사용 구조와 혼동을 만들 수 있다.",
+  "review_checklist": [
+    "typedef, class, struct, enum 선언이 실제 코드에서 참조되는가",
+    "테스트 전용 또는 향후 예정 코드라는 이유만으로 미사용 타입을 남겨두지 않았는가",
+    "생성된 코드/외부 인터페이스 때문에 보존해야 하는 타입인지 구분했는가",
+    "문서화 목적이라면 코드가 아니라 설계 문서로 옮기는 편이 적절한가"
+  ],
+  "common_violation_patterns": [
+    "더 이상 사용하지 않는 legacy enum 선언",
+    "리팩터링 후 호출부가 사라진 typedef alias",
+    "생성되지 않은 기능용 placeholder class 선언"
+  ],
+  "noncompliant_example": "typedef unsigned short LegacyPort;\n\nclass ObsoleteMessage {\npublic:\n    int id;\n};",
+  "compliant_example": "class ActiveMessage {\npublic:\n    int id;\n};",
+  "fix_guidance": [
+    "[탐지] 선언은 있으나 참조 검색에서 사용처가 없는 타입을 찾는다.",
+    "[판단] 외부 인터페이스, 자동 생성 코드, 향후 브랜치 병합 의존성 때문에 필요한지 확인한다.",
+    "[수정] 실제 미사용 타입은 제거하고 필요하면 설계 문서나 변경 이력에 이유를 남긴다.",
+    "[검증] 제거 후 빌드와 링크, 직렬화/역직렬화 인터페이스에 영향이 없는지 확인한다."
+  ],
   "sparrow_mapping": [],
-  "keywords": [],
+  "keywords": [
+    "unused-type",
+    "typedef",
+    "declaration"
+  ],
   "source_reference": "Klocwork MISRA C++ 2008 checker map + Cppcheck public rule coverage page where available; licensed-source verification required",
   "confidentiality": "internal",
-  "notes": "Placeholder generated from public rule numbering. Fill classification, localized summary, and mappings after licensed/internal verification."
+  "notes": "Expanded draft based on public rule title. Internal review still required."
 }

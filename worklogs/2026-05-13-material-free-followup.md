@@ -13,6 +13,8 @@
 - 01:06~01:10: 현재 benchmark, 확장 규칙, README/index 상태 재확인
 - 01:11~01:15: `reviewer-benchmark.v1.jsonl` 12건을 enriched schema로 고도화
 - 01:16: benchmark README / index 동기화
+- 01:17~01:24: C++ 규칙 7건(0-1-4 ~ 0-1-10) 상세 확장
+- 01:25: C++ README / index 동기화
 
 ## 작업 1 결과
 
@@ -24,3 +26,14 @@
 
 - JSONL 파싱 확인 예정
 - benchmark count = 12 유지 확인 예정
+
+## 작업 2 결과
+
+- C++ 규칙 상세 확장 10건 상태로 확대
+- 기존 3건 + 신규 7건(0-1-4 ~ 0-1-10)
+- 각 규칙에 summary, intent, domain context, review checklist, violation pattern, example, fix guidance 추가
+
+## 작업 2 검증 메모
+
+- C++ expanded_draft_count = 10 확인 예정
+- 신규 7건 JSON 파싱 확인 예정

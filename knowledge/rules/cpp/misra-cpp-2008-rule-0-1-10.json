@@ -5,19 +5,37 @@
   "rule_group": "Section 0-1",
   "rule_title": "Every defined function should be called at least once.",
   "classification": "TBD",
-  "severity": "TBD",
+  "severity": "low",
   "validation_status": "draft-unverified",
-  "summary_ko": "TBD",
-  "intent_ko": "TBD",
-  "domain_context_ko": "TBD",
-  "review_checklist": [],
-  "common_violation_patterns": [],
-  "noncompliant_example": "TBD",
-  "compliant_example": "TBD",
-  "fix_guidance": [],
+  "summary_ko": "정의된 함수는 최소 한 번은 호출되어야 하며, 호출되지 않는 함수는 제거 후보로 봐야 한다.",
+  "intent_ko": "호출되지 않는 함수는 설계 잔재, 미완성 기능, 잘못된 링크 구조를 나타내는 경우가 많다.",
+  "domain_context_ko": "보정 로직이나 장애 복구 함수가 정의만 되고 실제 호출되지 않으면 운용자는 존재한다고 믿지만 시스템은 쓰지 않는다.",
+  "review_checklist": [
+    "정의된 함수가 호출 그래프 어디에도 연결되지 않는가",
+    "테스트/디버그 전용 함수가 운영 코드에 남아 있지 않은가",
+    "가상 함수, callback entry, linker script 진입점처럼 간접 호출 구조인지 구분했는가",
+    "향후 사용 예정이라는 이유만으로 미사용 함수를 장기간 보존하고 있지 않은가"
+  ],
+  "common_violation_patterns": [
+    "정적 helper 함수가 한 번도 참조되지 않음",
+    "리팩터링 후 호출부가 사라진 legacy utility",
+    "디버그 빌드에서만 쓰던 함수가 운영 빌드에 남음"
+  ],
+  "noncompliant_example": "static void legacyRecovery(void) {\n    resetSubsystem();\n}\n\nvoid run(void) {\n    execute();\n}",
+  "compliant_example": "static void recovery(void) {\n    resetSubsystem();\n}\n\nvoid run(bool recover) {\n    if (recover) {\n        recovery();\n    }\n    execute();\n}",
+  "fix_guidance": [
+    "[탐지] 호출 그래프에서 참조되지 않는 함수 정의를 찾는다.",
+    "[판단] 간접 호출/테스트 진입점/외부 링크 진입점인지 실제 사용 경로를 확인한다.",
+    "[수정] 진짜 미사용 함수는 제거하고 필요한 함수는 호출 경로를 명확히 연결한다.",
+    "[검증] 제거 후 링크 오류가 없는지, 연결 후에는 테스트에서 실제 호출되는지 확인한다."
+  ],
   "sparrow_mapping": [],
-  "keywords": [],
+  "keywords": [
+    "unused-function",
+    "call-graph",
+    "legacy-helper"
+  ],
   "source_reference": "Klocwork MISRA C++ 2008 checker map + Cppcheck public rule coverage page where available; licensed-source verification required",
   "confidentiality": "internal",
-  "notes": "Placeholder generated from public rule numbering. Fill classification, localized summary, and mappings after licensed/internal verification."
+  "notes": "Expanded draft based on public rule title. Internal review still required."
 }

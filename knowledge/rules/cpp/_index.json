@@ -236,5 +236,5 @@
   ],
   "source": "Klocwork MISRA C++ 2008 checker map + Cppcheck public rule coverage page",
   "notes": "All files are placeholders unless separately expanded. Classification and wording require licensed/internal verification.",
-  "expanded_draft_count": 3
+  "expanded_draft_count": 10
 }

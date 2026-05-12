@@ -5,19 +5,37 @@
   "rule_group": "Section 0-1",
   "rule_title": "A project shall not contain instances of non-volatile variables being given values that are never subsequently used.",
   "classification": "TBD",
-  "severity": "TBD",
+  "severity": "medium",
   "validation_status": "draft-unverified",
-  "summary_ko": "TBD",
-  "intent_ko": "TBD",
-  "domain_context_ko": "TBD",
-  "review_checklist": [],
-  "common_violation_patterns": [],
-  "noncompliant_example": "TBD",
-  "compliant_example": "TBD",
-  "fix_guidance": [],
+  "summary_ko": "읽히기 전에 덮어써지는 값 대입은 설계 오류 신호이므로 제거하거나 흐름을 수정해야 한다.",
+  "intent_ko": "사용되지 않는 대입은 코드가 실제로 어떤 값을 소비하는지 숨기고, 초기화/상태 갱신 누락을 가릴 수 있다.",
+  "domain_context_ko": "상태 변수나 계산 버퍼에 값을 써놓고 곧바로 다른 값으로 덮어쓰면 센서 샘플 또는 제어 결과가 유실될 수 있다.",
+  "review_checklist": [
+    "변수에 대입된 값이 다음 대입 전까지 실제로 읽히는가",
+    "초기화와 재대입 중 어떤 값이 의미 있는 값인지 구분되는가",
+    "에러 처리나 조건 분기 때문에 값이 소비되지 못하는 경로가 있는가",
+    "불필요한 대입이 성능과 추적성을 동시에 해치고 있지 않은가"
+  ],
+  "common_violation_patterns": [
+    "초기값을 넣자마자 다른 값으로 재대입",
+    "조건문 양쪽에서 값을 넣지만 한쪽 결과는 never-read",
+    "루프 내부 임시 변수에 대입 후 즉시 덮어쓰기"
+  ],
+  "noncompliant_example": "void update() {\n    int status = 0;\n    status = readStatus();\n    status = normalizeStatus(status);\n    report(status);\n}",
+  "compliant_example": "void update() {\n    int status = normalizeStatus(readStatus());\n    report(status);\n}",
+  "fix_guidance": [
+    "[탐지] 값이 읽히기 전에 다음 대입으로 덮어써지는 변수를 찾는다.",
+    "[판단] 제거 가능한 단순 잔재인지, 누락된 사용처가 있는지 검토한다.",
+    "[수정] 불필요한 대입을 제거하고 필요한 경우 계산식을 병합하거나 사용 시점을 앞으로 당긴다.",
+    "[검증] 제거 후 보고/전송/로그에 사용되는 값이 의도한 최신 값인지 확인한다."
+  ],
   "sparrow_mapping": [],
-  "keywords": [],
+  "keywords": [
+    "unused-assignment",
+    "overwrite",
+    "data-flow"
+  ],
   "source_reference": "Klocwork MISRA C++ 2008 checker map + Cppcheck public rule coverage page where available; licensed-source verification required",
   "confidentiality": "internal",
-  "notes": "Placeholder generated from public rule numbering. Fill classification, localized summary, and mappings after licensed/internal verification."
+  "notes": "Expanded draft based on public rule title. Internal review still required."
 }
