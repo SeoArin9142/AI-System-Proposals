@@ -1,0 +1,40 @@
+{
+  "language": "C",
+  "standard_family": "MISRA C 2012",
+  "rule_id": "MISRA-C-2012-Rule-9.1",
+  "rule_group": "Initialization",
+  "rule_title": "automatic variable initialization before use",
+  "classification": "TBD",
+  "severity": "high",
+  "validation_status": "draft-unverified",
+  "summary_ko": "자동 저장소 기간을 가지는 지역 변수는 사용 전에 명시적으로 초기화되어야 한다.",
+  "intent_ko": "초기화되지 않은 값이 연산에 섞이면 예측 불가능한 동작과 잘못된 계산 결과를 만든다.",
+  "domain_context_ko": "전술 데이터 연산에서 고도, 속도, 상태값에 쓰레기값이 섞이면 시스템 판단이 틀어질 수 있다.",
+  "review_checklist": [
+    "지역 변수가 선언 시점에 초기화되었는가",
+    "실제 값 대입 전에 읽히는 경로가 없는가"
+  ],
+  "common_violation_patterns": [
+    "초기화 없는 지역 변수 선언",
+    "센서/함수 결과 대입 전에 연산에 사용"
+  ],
+  "noncompliant_example": "void update_altitude() {\n    uint16_t current_alt;\n    uint16_t offset = get_sensor_offset();\n    uint16_t new_alt = current_alt + offset;\n    set_altitude(new_alt);\n}",
+  "compliant_example": "void update_altitude() {\n    uint16_t current_alt = 0U;\n    uint16_t offset = get_sensor_offset();\n    current_alt = get_current_altitude();\n    uint16_t new_alt = current_alt + offset;\n    set_altitude(new_alt);\n}",
+  "fix_guidance": [
+    "선언만 되고 초기화되지 않은 변수를 추적한다.",
+    "변수 선언 시 타입에 맞는 안전한 기본값으로 초기화한다.",
+    "실제 데이터가 필요하면 초기화 직후 명시적으로 값을 대입한다."
+  ],
+  "sparrow_mapping": [
+    "UNINIT_VARIABLE",
+    "READ_UNINIT"
+  ],
+  "keywords": [
+    "initialization",
+    "automatic-storage",
+    "uninitialized-read"
+  ],
+  "source_reference": "Gemini-Pro draft summary; licensed-source verification required",
+  "confidentiality": "internal",
+  "notes": "Gemini-Pro 초안 기반 정규화. 원문 복사 대신 요약 사용."
+}

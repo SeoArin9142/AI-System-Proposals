@@ -1,0 +1,41 @@
+{
+  "language": "C",
+  "standard_family": "MISRA C 2012",
+  "rule_id": "MISRA-C-2012-Rule-18.1",
+  "rule_group": "Pointer and Array",
+  "rule_title": "array boundary access safety",
+  "classification": "TBD",
+  "severity": "high",
+  "validation_status": "draft-unverified",
+  "summary_ko": "배열과 포인터 연산은 할당된 경계를 벗어나지 않도록 보호되어야 한다.",
+  "intent_ko": "경계 밖 접근은 메모리 오염과 버퍼 오버플로우를 일으켜 시스템 신뢰성을 붕괴시킨다.",
+  "domain_context_ko": "전술 데이터 버퍼나 항적 배열을 잘못 접근하면 인접 메모리를 덮어써 다른 항적 정보까지 오염시킬 수 있다.",
+  "review_checklist": [
+    "배열 접근 전에 인덱스 범위 검사가 있는가",
+    "배열 크기 상수와 조건식이 일치하는가"
+  ],
+  "common_violation_patterns": [
+    "외부 입력 인덱스를 검증 없이 배열에 사용",
+    "상수 크기 변경 후 조건식 미갱신"
+  ],
+  "noncompliant_example": "void update_track(uint16_t index, uint32_t data) {\n    uint32_t track_buffer[100];\n    track_buffer[index] = data;\n}",
+  "compliant_example": "void update_track(uint16_t index, uint32_t data) {\n    uint32_t track_buffer[100];\n    if (index < 100U) {\n        track_buffer[index] = data;\n    }\n}",
+  "fix_guidance": [
+    "배열 접근에 사용된 인덱스 변수를 식별한다.",
+    "배열 최대 크기를 기준으로 경계 검사를 추가한다.",
+    "쓰기/읽기 직전에 방어 조건문을 삽입한다."
+  ],
+  "sparrow_mapping": [
+    "OUT_OF_BOUNDS",
+    "BUFFER_OVERFLOW",
+    "ARRAY_INDEX_OUT_OF_BOUNDS"
+  ],
+  "keywords": [
+    "array",
+    "bounds",
+    "buffer-overflow"
+  ],
+  "source_reference": "Gemini-Pro draft summary; licensed-source verification required",
+  "confidentiality": "internal",
+  "notes": "배열 길이 상수 매크로화와 함께 쓰는 것이 바람직함."
+}

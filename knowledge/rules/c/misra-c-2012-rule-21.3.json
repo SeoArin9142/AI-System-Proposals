@@ -1,0 +1,41 @@
+{
+  "language": "C",
+  "standard_family": "MISRA C 2012",
+  "rule_id": "MISRA-C-2012-Rule-21.3",
+  "rule_group": "Memory Management",
+  "rule_title": "dynamic memory allocation prohibition",
+  "classification": "TBD",
+  "severity": "high",
+  "validation_status": "draft-unverified",
+  "summary_ko": "임베디드 신뢰성 확보를 위해 동적 메모리 할당 함수 사용을 금지하고 정적/지역 버퍼로 대체해야 한다.",
+  "intent_ko": "동적 메모리는 단편화, 할당 실패, 누수, 해제 오류를 만들어 장기 운용 안정성을 해친다.",
+  "domain_context_ko": "방산/실시간 시스템에서는 메모리 단편화와 패닉 가능성을 원천적으로 제거하는 방향이 일반적이다.",
+  "review_checklist": [
+    "malloc, calloc, realloc, free 호출이 남아 있는가",
+    "최대 크기를 기준으로 정적/지역 버퍼로 대체 가능한가"
+  ],
+  "common_violation_patterns": [
+    "메시지 크기별 malloc 사용",
+    "동적 버퍼 해제 로직 의존"
+  ],
+  "noncompliant_example": "void process_j3_2_message(uint16_t size) {\n    uint8_t *msg_buffer = (uint8_t *)malloc(size);\n    if (msg_buffer != NULL) {\n        free(msg_buffer);\n    }\n}",
+  "compliant_example": "#define MAX_J3_2_MSG_SIZE 256U\nvoid process_j3_2_message(uint16_t size) {\n    uint8_t msg_buffer[MAX_J3_2_MSG_SIZE];\n    if (size <= MAX_J3_2_MSG_SIZE) {\n    }\n}",
+  "fix_guidance": [
+    "동적 메모리 할당/해제 호출부를 식별한다.",
+    "최대 예상 크기를 정의해 정적 또는 지역 배열로 바꾼다.",
+    "입력 크기 경계 검사를 추가한다."
+  ],
+  "sparrow_mapping": [
+    "MEMORY_LEAK",
+    "USE_AFTER_FREE",
+    "DOUBLE_FREE"
+  ],
+  "keywords": [
+    "memory",
+    "malloc",
+    "fragmentation"
+  ],
+  "source_reference": "Gemini-Pro draft summary; licensed-source verification required",
+  "confidentiality": "internal",
+  "notes": "프로젝트에서 예외 허용 여부가 있다면 별도 정책 파일로 관리 필요."
+}

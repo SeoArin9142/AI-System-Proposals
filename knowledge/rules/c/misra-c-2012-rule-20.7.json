@@ -1,0 +1,40 @@
+{
+  "language": "C",
+  "standard_family": "MISRA C 2012",
+  "rule_id": "MISRA-C-2012-Rule-20.7",
+  "rule_group": "Macros and Preprocessor",
+  "rule_title": "macro parameter parenthesization",
+  "classification": "TBD",
+  "severity": "medium",
+  "validation_status": "draft-unverified",
+  "summary_ko": "함수형 매크로의 매개변수와 전체 표현식은 연산 우선순위 오류를 막기 위해 적절히 괄호로 감싸야 한다.",
+  "intent_ko": "매크로 확장 시 우선순위가 달라지면 계산 결과가 설계 의도와 다르게 왜곡될 수 있다.",
+  "domain_context_ko": "좌표나 속도 계산식 같은 수치 처리에서 괄호 누락은 치명적인 오차를 유발할 수 있다.",
+  "review_checklist": [
+    "매크로 매개변수가 각각 괄호로 감싸져 있는가",
+    "매크로 전체 표현식이 외곽 괄호로 감싸져 있는가"
+  ],
+  "common_violation_patterns": [
+    "distance / time 형태의 직접 매크로 확장",
+    "매크로 인자에 식을 넣었을 때 우선순위 역전"
+  ],
+  "noncompliant_example": "#define GET_SPEED(distance, time) distance / time\nvoid calc_target(void) {\n    uint32_t speed = GET_SPEED(dist_a + dist_b, 5U);\n}",
+  "compliant_example": "#define GET_SPEED(distance, time) (((distance) / (time)))\nvoid calc_target(void) {\n    uint32_t speed = GET_SPEED(dist_a + dist_b, 5U);\n}",
+  "fix_guidance": [
+    "매크로 선언부를 찾는다.",
+    "매개변수 식별자를 각각 괄호로 감싼다.",
+    "전체 매크로 표현식을 한 번 더 외곽 괄호로 감싼다."
+  ],
+  "sparrow_mapping": [
+    "MACRO_PARENTHESIS",
+    "UNSAFE_MACRO_USAGE"
+  ],
+  "keywords": [
+    "macro",
+    "parenthesis",
+    "precedence"
+  ],
+  "source_reference": "Gemini-Pro draft summary; licensed-source verification required",
+  "confidentiality": "internal",
+  "notes": "매크로 대신 inline 함수 대체 가능성도 함께 검토 권장."
+}

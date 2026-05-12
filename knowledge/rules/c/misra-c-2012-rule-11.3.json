@@ -1,0 +1,41 @@
+{
+  "language": "C",
+  "standard_family": "MISRA C 2012",
+  "rule_id": "MISRA-C-2012-Rule-11.3",
+  "rule_group": "Pointer Casting",
+  "rule_title": "pointer cast and aliasing safety",
+  "classification": "TBD",
+  "severity": "high",
+  "validation_status": "draft-unverified",
+  "summary_ko": "바이트 배열이나 다른 객체를 호환되지 않는 포인터 타입으로 강제 캐스팅하는 방식은 피해야 한다.",
+  "intent_ko": "정렬 문제와 strict aliasing 위반은 잘못된 데이터 해석과 런타임 오류를 유발한다.",
+  "domain_context_ko": "수신 메시지 바이트 배열을 큰 정수형이나 구조체 포인터로 바로 바꾸면 CPU 아키텍처 차이에 따라 오동작할 수 있다.",
+  "review_checklist": [
+    "uint8_t *를 다른 타입 포인터로 직접 캐스팅하고 있는가",
+    "memcpy 같은 안전한 추출 방식으로 대체 가능한가"
+  ],
+  "common_violation_patterns": [
+    "raw byte buffer를 uint32_t *로 캐스팅",
+    "타입 퍼닝을 위한 포인터 재해석"
+  ],
+  "noncompliant_example": "void parse_message(uint8_t *raw_data) {\n    uint32_t *header = (uint32_t *)raw_data;\n    uint32_t msg_id = *header;\n}",
+  "compliant_example": "void parse_message(uint8_t *raw_data) {\n    uint32_t msg_id;\n    (void)memcpy(&msg_id, raw_data, sizeof(msg_id));\n}",
+  "fix_guidance": [
+    "다른 타입 포인터로의 강제 캐스팅 위치를 찾는다.",
+    "대상 타입 지역 변수를 선언한다.",
+    "memcpy를 사용해 바이트 데이터를 안전하게 복사하도록 수정한다."
+  ],
+  "sparrow_mapping": [
+    "STRICT_ALIASING_VIOLATION",
+    "BAD_CAST",
+    "TYPE_PUNNING"
+  ],
+  "keywords": [
+    "pointer-cast",
+    "aliasing",
+    "alignment"
+  ],
+  "source_reference": "Gemini-Pro draft summary; licensed-source verification required",
+  "confidentiality": "internal",
+  "notes": "strict aliasing과 정렬 조건은 대상 플랫폼에 맞춰 재검토 필요."
+}

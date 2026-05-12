@@ -1,0 +1,40 @@
+{
+  "language": "C",
+  "standard_family": "MISRA C 2012",
+  "rule_id": "MISRA-C-2012-Rule-17.2",
+  "rule_group": "Control Flow",
+  "rule_title": "recursion prohibition",
+  "classification": "TBD",
+  "severity": "high",
+  "validation_status": "draft-unverified",
+  "summary_ko": "재귀 호출은 사용하지 않고 반복문이나 명시적 상태 관리 구조로 바꾸어야 한다.",
+  "intent_ko": "재귀는 스택 사용량을 예측하기 어렵게 만들어 임베디드/실시간 환경에서 치명적인 오버플로우를 유발할 수 있다.",
+  "domain_context_ko": "제한된 스택 크기를 가진 RTOS 환경에서는 재귀 사용이 시스템 재부팅이나 강제 종료로 이어질 수 있다.",
+  "review_checklist": [
+    "함수가 직접 또는 간접으로 자기 자신을 호출하는가",
+    "동일 로직을 반복문으로 치환할 수 있는가"
+  ],
+  "common_violation_patterns": [
+    "팩토리얼/탐색 로직을 재귀로 구현",
+    "간접 재귀 호출 체인"
+  ],
+  "noncompliant_example": "uint32_t calculate_track_prediction(uint32_t depth) {\n    if (depth == 0U) {\n        return 1U;\n    }\n    return depth * calculate_track_prediction(depth - 1U);\n}",
+  "compliant_example": "uint32_t calculate_track_prediction(uint32_t depth) {\n    uint32_t result = 1U;\n    for (uint32_t i = 1U; i <= depth; ++i) {\n        result *= i;\n    }\n    return result;\n}",
+  "fix_guidance": [
+    "재귀 호출 지점을 식별한다.",
+    "누적 상태를 지역 변수로 분리한다.",
+    "for 또는 while 기반 반복 구조로 재작성한다."
+  ],
+  "sparrow_mapping": [
+    "RECURSION_CALL",
+    "STACK_OVERFLOW_RISK"
+  ],
+  "keywords": [
+    "recursion",
+    "stack",
+    "iteration"
+  ],
+  "source_reference": "Gemini-Pro draft summary; licensed-source verification required",
+  "confidentiality": "internal",
+  "notes": "간접 재귀도 탐지 대상에 포함해야 함."
+}

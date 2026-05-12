@@ -30,6 +30,7 @@
 
 ### 규칙 데이터 템플릿
 - [규칙/예제 템플릿 안내](templates/README.md)
+- [정규화된 C 규칙 카드 초안](knowledge/rules/c/README.md)
 
 ## 구축안 요약
 

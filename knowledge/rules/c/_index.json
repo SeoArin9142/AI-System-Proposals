@@ -1,0 +1,22 @@
+{
+  "language": "C",
+  "standard_family": "MISRA C 2012",
+  "validation_status": "draft-unverified",
+  "rule_count": 12,
+  "rules": [
+    "misra-c-2012-rule-09.1.json",
+    "misra-c-2012-rule-10.3.json",
+    "misra-c-2012-rule-11.1.json",
+    "misra-c-2012-rule-11.3.json",
+    "misra-c-2012-rule-14.3.json",
+    "misra-c-2012-rule-16.3.json",
+    "misra-c-2012-rule-16.4.json",
+    "misra-c-2012-rule-17.2.json",
+    "misra-c-2012-rule-18.1.json",
+    "misra-c-2012-rule-20.7.json",
+    "misra-c-2012-rule-20.9.json",
+    "misra-c-2012-rule-21.3.json"
+  ],
+  "source": "Gemini-Pro draft JSON normalized into one-rule-per-file cards",
+  "notes": "MISRA classification/title and Sparrow mapping need verification against licensed/internal sources."
+}

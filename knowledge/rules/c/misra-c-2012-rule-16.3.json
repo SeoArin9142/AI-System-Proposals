@@ -1,0 +1,40 @@
+{
+  "language": "C",
+  "standard_family": "MISRA C 2012",
+  "rule_id": "MISRA-C-2012-Rule-16.3",
+  "rule_group": "Switch Statements",
+  "rule_title": "switch fall-through prevention",
+  "classification": "TBD",
+  "severity": "high",
+  "validation_status": "draft-unverified",
+  "summary_ko": "각 case는 의도하지 않은 fall-through가 발생하지 않도록 명시적으로 종료되어야 한다.",
+  "intent_ko": "break 누락은 다음 case 로직까지 연쇄 실행시켜 심각한 제어 오류를 만든다.",
+  "domain_context_ko": "권한 제어나 상태 전이 로직에서 누락된 break는 의도하지 않은 고위험 동작을 실행시킬 수 있다.",
+  "review_checklist": [
+    "각 case 블록 끝에 break, return 등 종료 구문이 있는가",
+    "의도적 fall-through라면 프로젝트 규칙에 맞게 명시되었는가"
+  ],
+  "common_violation_patterns": [
+    "warning 처리 후 break 누락",
+    "다음 case 로직이 연속 실행됨"
+  ],
+  "noncompliant_example": "void handle_alert(uint8_t level) {\n    switch (level) {\n        case ALERT_LOW:\n            print_warning();\n        case ALERT_HIGH:\n            trigger_alarm();\n            break;\n    }\n}",
+  "compliant_example": "void handle_alert(uint8_t level) {\n    switch (level) {\n        case ALERT_LOW:\n            print_warning();\n            break;\n        case ALERT_HIGH:\n            trigger_alarm();\n            break;\n        default:\n            break;\n    }\n}",
+  "fix_guidance": [
+    "fall-through가 발생하는 case 블록을 찾는다.",
+    "다음 case 진입 직전에 break 또는 적절한 종료 구문을 추가한다.",
+    "의도적 연속 실행이 필요한 경우 별도 설계 검토와 명시 규칙을 적용한다."
+  ],
+  "sparrow_mapping": [
+    "MISSING_BREAK",
+    "FALL_THROUGH"
+  ],
+  "keywords": [
+    "switch",
+    "fall-through",
+    "break"
+  ],
+  "source_reference": "Gemini-Pro draft summary; licensed-source verification required",
+  "confidentiality": "internal",
+  "notes": "의도적 fall-through 허용 기준은 프로젝트 규칙과 함께 정의 필요."
+}

@@ -1,0 +1,39 @@
+{
+  "language": "C",
+  "standard_family": "MISRA C 2012",
+  "rule_id": "MISRA-C-2012-Rule-11.1",
+  "rule_group": "Function Pointers",
+  "rule_title": "function pointer type compatibility",
+  "classification": "TBD",
+  "severity": "high",
+  "validation_status": "draft-unverified",
+  "summary_ko": "함수 포인터는 호환되지 않는 시그니처로 캐스팅하거나 할당하지 않아야 한다.",
+  "intent_ko": "호출 규약과 매개변수 구조가 맞지 않으면 호출 시 스택 손상과 복구 불가 오류가 발생할 수 있다.",
+  "domain_context_ko": "콜백 등록 구조에서 잘못된 함수 시그니처를 강제 캐스팅하면 런타임 장애로 이어질 수 있다.",
+  "review_checklist": [
+    "할당 대상 함수 포인터와 실제 함수 시그니처가 일치하는가",
+    "강제 캐스팅으로 경고를 숨기고 있지 않은가"
+  ],
+  "common_violation_patterns": [
+    "매개변수 개수/타입이 다른 함수 포인터 캐스팅",
+    "void * 또는 다른 함수 타입으로 우회 저장"
+  ],
+  "noncompliant_example": "typedef void (*timer_cb_t)(void);\nvoid my_callback(uint32_t id);\nvoid register_timer(void) {\n    timer_cb_t cb = (timer_cb_t)my_callback;\n}",
+  "compliant_example": "typedef void (*timer_cb_t)(uint32_t id);\nvoid my_callback(uint32_t id);\nvoid register_timer(void) {\n    timer_cb_t cb = my_callback;\n}",
+  "fix_guidance": [
+    "함수와 함수 포인터의 반환형 및 매개변수 목록을 비교한다.",
+    "강제 캐스팅을 제거한다.",
+    "typedef 또는 등록 인터페이스를 수정해 정확히 일치하는 시그니처를 사용한다."
+  ],
+  "sparrow_mapping": [
+    "INVALID_FUNC_POINTER_CAST"
+  ],
+  "keywords": [
+    "function-pointer",
+    "signature",
+    "callback"
+  ],
+  "source_reference": "Gemini-Pro draft summary; licensed-source verification required",
+  "confidentiality": "internal",
+  "notes": "실제 콜백 API와 함께 검증 필요."
+}

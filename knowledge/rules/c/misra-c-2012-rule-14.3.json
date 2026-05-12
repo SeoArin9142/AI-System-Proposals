@@ -1,0 +1,40 @@
+{
+  "language": "C",
+  "standard_family": "MISRA C 2012",
+  "rule_id": "MISRA-C-2012-Rule-14.3",
+  "rule_group": "Conditionals",
+  "rule_title": "constant condition avoidance",
+  "classification": "TBD",
+  "severity": "medium",
+  "validation_status": "draft-unverified",
+  "summary_ko": "조건식은 항상 참 또는 항상 거짓이 되지 않도록 작성해야 한다.",
+  "intent_ko": "상수 조건은 설계 오류와 데드 코드를 숨기며 상태 분기 로직을 왜곡한다.",
+  "domain_context_ko": "상태 머신이나 장비 제어 분기에서 도달 불가능 코드가 생기면 신뢰성이 크게 떨어진다.",
+  "review_checklist": [
+    "조건식이 변수 타입상 항상 참/거짓인지 확인했는가",
+    "비즈니스 로직을 반영한 실제 상태 비교식으로 작성되었는가"
+  ],
+  "common_violation_patterns": [
+    "unsigned 값에 >= 0 비교",
+    "상수 조건으로 인해 dead code 발생"
+  ],
+  "noncompliant_example": "uint8_t link_status = get_link_k_status();\nif (link_status >= 0U) {\n    process_link_data();\n}",
+  "compliant_example": "uint8_t link_status = get_link_k_status();\nif (link_status == LINK_ACTIVE_STATE) {\n    process_link_data();\n}",
+  "fix_guidance": [
+    "조건식에 사용된 변수 타입과 상수 범위를 분석한다.",
+    "의미 없는 비교식을 제거한다.",
+    "실제 상태값이나 유효 범위를 반영한 조건식으로 치환한다."
+  ],
+  "sparrow_mapping": [
+    "CONSTANT_CONDITION",
+    "DEAD_CODE"
+  ],
+  "keywords": [
+    "condition",
+    "dead-code",
+    "logic"
+  ],
+  "source_reference": "Gemini-Pro draft summary; licensed-source verification required",
+  "confidentiality": "internal",
+  "notes": "프로젝트 상태 코드 정의와 함께 검토 필요."
+}

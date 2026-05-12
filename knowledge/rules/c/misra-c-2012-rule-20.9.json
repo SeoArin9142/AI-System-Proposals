@@ -1,0 +1,40 @@
+{
+  "language": "C",
+  "standard_family": "MISRA C 2012",
+  "rule_id": "MISRA-C-2012-Rule-20.9",
+  "rule_group": "Macros and Preprocessor",
+  "rule_title": "defined-macro checks in preprocessor conditions",
+  "classification": "TBD",
+  "severity": "high",
+  "validation_status": "draft-unverified",
+  "summary_ko": "전처리 조건식에서 매크로 값을 사용할 때는 먼저 정의 여부를 명시적으로 검사해야 한다.",
+  "intent_ko": "정의되지 않은 매크로는 0으로 평가되어 엉뚱한 컴파일 분기를 조용히 선택할 수 있다.",
+  "domain_context_ko": "장비 버전별 펌웨어 로직 분기에서 잘못된 조건식은 다른 장비용 코드가 탑재되는 사고로 이어질 수 있다.",
+  "review_checklist": [
+    "#if 또는 #elif에서 매크로 정의 여부를 먼저 확인하는가",
+    "defined(MACRO)와 값 비교가 함께 들어가는가"
+  ],
+  "common_violation_patterns": [
+    "#if MACRO == 1 형태의 직접 비교",
+    "정의 여부 미검사로 기본값 0 평가"
+  ],
+  "noncompliant_example": "#if RADAR_VERSION_B == 1\n    init_new_radar_protocol();\n#else\n    init_legacy_protocol();\n#endif",
+  "compliant_example": "#if defined(RADAR_VERSION_B) && (RADAR_VERSION_B == 1)\n    init_new_radar_protocol();\n#else\n    init_legacy_protocol();\n#endif",
+  "fix_guidance": [
+    "조건식에 사용된 매크로를 식별한다.",
+    "단순 비교를 defined(MACRO) && (...) 형태로 바꾼다.",
+    "모든 전처리 분기에 동일 규칙을 적용한다."
+  ],
+  "sparrow_mapping": [
+    "UNDEF_MACRO_USE",
+    "CONDITIONAL_COMPILATION_ERROR"
+  ],
+  "keywords": [
+    "preprocessor",
+    "defined",
+    "conditional-compilation"
+  ],
+  "source_reference": "Gemini-Pro draft summary; licensed-source verification required",
+  "confidentiality": "internal",
+  "notes": "빌드 설정 문서와 함께 실제 매크로 정의 위치 대조 필요."
+}
