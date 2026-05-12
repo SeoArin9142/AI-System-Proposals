@@ -1,0 +1,1 @@
+{"input":{"language":"C++","finding_id":"SPARROW_FINDING_ID","rule_candidates":["CPP-RULE-ID"],"code":"std::vector<int> v; int x = v[0];","context":"finding summary or build/test context"},"expected":{"primary_rule":"CPP-RULE-ID","explanation_ko":"왜 위반인지 설명","fix_guidance":["수정 가이드 1","수정 가이드 2"],"decision":"rework","confidence":"high"}}

@@ -1,0 +1,1 @@
+{"input":{"language":"C","finding_id":"SPARROW_FINDING_ID","rule_candidates":["C-RULE-ID"],"code":"int x = y;","context":"finding summary or build/test context"},"expected":{"primary_rule":"C-RULE-ID","explanation_ko":"왜 위반인지 설명","fix_guidance":["수정 가이드 1","수정 가이드 2"],"decision":"rework","confidence":"high"}}

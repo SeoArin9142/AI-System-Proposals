@@ -1,0 +1,36 @@
+{
+  "language": "C++",
+  "standard_family": "MISRA C++ | AUTOSAR C++14 | CERT C++ | Project Rule",
+  "rule_id": "CPP-RULE-ID",
+  "rule_title": "Rule title",
+  "classification": "Required | Advisory | Mandatory | Project",
+  "severity": "high | medium | low",
+  "summary_ko": "규칙 한글 요약",
+  "intent_ko": "이 규칙이 필요한 이유와 방지하려는 위험",
+  "review_checklist": [
+    "리뷰 시 확인할 항목 1",
+    "리뷰 시 확인할 항목 2"
+  ],
+  "common_violation_patterns": [
+    "자주 발생하는 위반 패턴 1",
+    "자주 발생하는 위반 패턴 2"
+  ],
+  "noncompliant_example": "// bad example\nstd::vector<int> v; int x = v[0];",
+  "compliant_example": "// good example\nstd::vector<int> v; if (!v.empty()) { int x = v[0]; }",
+  "fix_guidance": [
+    "수정 가이드 1",
+    "수정 가이드 2"
+  ],
+  "sparrow_mapping": [
+    "SPARROW_FINDING_ID_1",
+    "SPARROW_FINDING_ID_2"
+  ],
+  "keywords": [
+    "lifetime",
+    "exception",
+    "container"
+  ],
+  "source_reference": "license-safe reference or internal summary id",
+  "confidentiality": "internal",
+  "notes": "실제 프로젝트 코드 대신 합성 예제 사용"
+}

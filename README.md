@@ -28,6 +28,9 @@
 - [외부망 PPT](presentations/issue-171-external-ai-system-proposal.pptx)
 - [외부망 Word](presentations/issue-171-external-ai-system-proposal.docx)
 
+### 규칙 데이터 템플릿
+- [규칙/예제 템플릿 안내](templates/README.md)
+
 ## 구축안 요약
 
 ### 1. 폐쇄망 내부형
