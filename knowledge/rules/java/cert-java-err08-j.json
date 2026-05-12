@@ -7,19 +7,35 @@
   "classification": "Rule",
   "severity": "Medium",
   "validation_status": "draft-unverified",
-  "summary_ko": "TBD",
-  "intent_ko": "TBD",
-  "domain_context_ko": "TBD",
-  "review_checklist": [],
-  "common_violation_patterns": [],
-  "noncompliant_example": "TBD",
-  "compliant_example": "TBD",
-  "fix_guidance": [],
+  "summary_ko": "NullPointerException이나 그 상위 예외를 포괄적으로 잡아 흐름 제어에 사용해서는 안 된다.",
+  "intent_ko": "NPE를 catch로 삼키면 실제 null 원인을 숨기고 프로그램 상태를 오염된 채로 계속 진행하게 된다.",
+  "domain_context_ko": "서비스 계층에서 NPE를 일반 오류처럼 처리하면 데이터 손상, 누락 저장, 잘못된 응답이 조용히 발생할 수 있다.",
+  "review_checklist": [
+    "catch 블록이 NullPointerException 또는 RuntimeException/Exception으로 NPE를 삼키는가",
+    "null 가능성은 사전에 검증하거나 Optional/명시적 분기로 처리되는가",
+    "예외를 기록만 하고 계속 진행해 상태 오염을 남기지 않는가",
+    "라이브러리 경계에서 NPE를 도메인 예외로 변환해야 하는 경우 근본 원인이 보존되는가"
+  ],
+  "common_violation_patterns": [
+    "try/catch로 NPE를 정상 제어 흐름처럼 사용",
+    "Exception catch 후 무시하여 NPE 원인 은폐",
+    "null 체크 대신 broad catch로 대체"
+  ],
+  "noncompliant_example": "try {\n    process(order.getCustomer().getId());\n} catch (NullPointerException e) {\n    log.warn(\"missing customer\");\n}",
+  "compliant_example": "Customer customer = order.getCustomer();\nif (customer == null) {\n    throw new IllegalStateException(\"customer is required\");\n}\nprocess(customer.getId());",
+  "fix_guidance": [
+    "[탐지] NPE 또는 상위 포괄 예외를 catch하는 위치를 찾는다.",
+    "[판단] null이 허용 가능한 입력인지, 사전 검증 누락인지 확인한다.",
+    "[수정] null 체크, Optional, 명시적 precondition 검증으로 흐름을 재구성한다.",
+    "[검증] null 입력과 정상 입력 테스트에서 예외 원인이 명확하게 드러나는지 확인한다."
+  ],
   "sparrow_mapping": [],
   "keywords": [
-    "ERR08"
+    "null-pointer",
+    "exception-handling",
+    "precondition"
   ],
   "source_reference": "SEI CERT Oracle Coding Standard for Java public rules page; internal adaptation verification required",
   "confidentiality": "internal",
-  "notes": "Placeholder generated from public CERT Java rule list. Expand summary, examples, and mappings after internal validation. Official CERT risk metadata: severity=Medium, likelihood=Likely, detectable=Yes, repairable=No, priority=P12, level=L1."
+  "notes": "Expanded draft based on public CERT Java rule title and risk metadata. Internal verification still required."
 }

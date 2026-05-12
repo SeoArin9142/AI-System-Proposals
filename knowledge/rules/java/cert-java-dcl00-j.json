@@ -7,19 +7,35 @@
   "classification": "Rule",
   "severity": "Low",
   "validation_status": "draft-unverified",
-  "summary_ko": "TBD",
-  "intent_ko": "TBD",
-  "domain_context_ko": "TBD",
-  "review_checklist": [],
-  "common_violation_patterns": [],
-  "noncompliant_example": "TBD",
-  "compliant_example": "TBD",
-  "fix_guidance": [],
+  "summary_ko": "클래스 초기화 순환이 생기지 않도록 static 초기화 의존성을 단순하게 유지해야 한다.",
+  "intent_ko": "클래스 초기화가 서로를 다시 참조하면 부분 초기화 상태, 초기화 예외, 예측하기 어려운 부팅 실패가 발생할 수 있다.",
+  "domain_context_ko": "설정 싱글턴, 레지스트리, static 캐시가 서로 얽히면 서비스 시작 시점에 장애가 반복 재현될 수 있다.",
+  "review_checklist": [
+    "static 필드 초기화나 static 블록이 다른 클래스의 static 초기화를 다시 유발하는가",
+    "생성 시점이 중요한 싱글턴/레지스트리가 상호 참조 구조를 만들지 않는가",
+    "초기화 순서가 JVM 구현 세부에 의존하지 않는가",
+    "초기화 실패 시 ExceptionInInitializerError로 숨겨지는 경로가 있는가"
+  ],
+  "common_violation_patterns": [
+    "A의 static 필드가 B.getInstance()를 호출하고 B가 다시 A를 참조",
+    "상수처럼 보이는 static 초기화가 내부적으로 다른 클래스 로딩을 유발",
+    "정적 레지스트리가 생성 과정에서 자기 자신을 재호출"
+  ],
+  "noncompliant_example": "class A {\n    static final B B_REF = B.INSTANCE;\n}\nclass B {\n    static final B INSTANCE = new B();\n    B() {\n        System.out.println(A.B_REF);\n    }\n}",
+  "compliant_example": "class Registry {\n    private static final Registry INSTANCE = new Registry();\n    static Registry getInstance() { return INSTANCE; }\n}\nclass Service {\n    private final Registry registry = Registry.getInstance();\n}",
+  "fix_guidance": [
+    "[탐지] static 필드/블록 간 상호 참조와 클래스 로딩 순서를 추적한다.",
+    "[판단] 순환 의존이 단순 편의 구조인지 실제 초기화 요구사항인지 분리한다.",
+    "[수정] 지연 초기화, 명시적 팩토리, 의존성 주입으로 초기화 순환을 끊는다.",
+    "[검증] 서비스 시작과 테스트 초기화 시 ExceptionInInitializerError 없이 동일 순서로 기동되는지 확인한다."
+  ],
   "sparrow_mapping": [],
   "keywords": [
-    "DCL00"
+    "class-initialization",
+    "static-cycle",
+    "bootstrap"
   ],
   "source_reference": "SEI CERT Oracle Coding Standard for Java public rules page; internal adaptation verification required",
   "confidentiality": "internal",
-  "notes": "Placeholder generated from public CERT Java rule list. Expand summary, examples, and mappings after internal validation. Official CERT risk metadata: severity=Low, likelihood=Unlikely, detectable=Yes, repairable=No, priority=P2, level=L3."
+  "notes": "Expanded draft based on public CERT Java rule title and risk metadata. Internal verification still required."
 }

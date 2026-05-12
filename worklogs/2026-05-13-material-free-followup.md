@@ -15,6 +15,8 @@
 - 01:16: benchmark README / index 동기화
 - 01:17~01:24: C++ 규칙 7건(0-1-4 ~ 0-1-10) 상세 확장
 - 01:25: C++ README / index 동기화
+- 01:26~01:34: Java 규칙 7건(DCL00/ERR08/FIO02/IDS00/NUM01/OBJ09/SEC00) 상세 확장
+- 01:35: Java README / index 동기화
 
 ## 작업 1 결과
 
@@ -36,4 +38,15 @@
 ## 작업 2 검증 메모
 
 - C++ expanded_draft_count = 10 확인 예정
+- 신규 7건 JSON 파싱 확인 예정
+
+## 작업 3 결과
+
+- Java 규칙 상세 확장 10건 상태로 확대
+- 기존 3건 + 신규 7건(DCL00-J, ERR08-J, FIO02-J, IDS00-J, NUM01-J, OBJ09-J, SEC00-J)
+- 보안, 예외, 입출력, 타입 비교 중심 우선 규칙 보강
+
+## 작업 3 검증 메모
+
+- Java expanded_draft_count = 10 확인 예정
 - 신규 7건 JSON 파싱 확인 예정

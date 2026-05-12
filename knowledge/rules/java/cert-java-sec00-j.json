@@ -7,19 +7,35 @@
   "classification": "Rule",
   "severity": "Medium",
   "validation_status": "draft-unverified",
-  "summary_ko": "TBD",
-  "intent_ko": "TBD",
-  "domain_context_ko": "TBD",
-  "review_checklist": [],
-  "common_violation_patterns": [],
-  "noncompliant_example": "TBD",
-  "compliant_example": "TBD",
-  "fix_guidance": [],
+  "summary_ko": "privileged block는 신뢰 경계를 넘는 민감한 정보를 외부로 새지 않도록 최소 범위로 사용해야 한다.",
+  "intent_ko": "권한 상승 블록 안에서 얻은 파일 경로, 시스템 속성, 보안 객체를 그대로 외부에 넘기면 privilege boundary가 무너진다.",
+  "domain_context_ko": "보안 관리자나 샌드박스 경계가 있는 환경에서 privileged 결과를 그대로 반환하면 호출자가 원래 권한 없이 민감 정보를 얻게 된다.",
+  "review_checklist": [
+    "doPrivileged 블록이 꼭 필요한 최소 코드 범위만 감싸는가",
+    "privileged block 안에서 읽은 민감 정보가 그대로 반환되거나 캐시되지 않는가",
+    "권한 상승 결과를 untrusted 입력과 결합해 사용하지 않는가",
+    "호출자 권한으로 다시 검증해야 할 경계가 남아 있지 않은가"
+  ],
+  "common_violation_patterns": [
+    "doPrivileged 안에서 읽은 시스템 속성을 그대로 반환",
+    "민감 파일 핸들을 권한 없는 호출자에게 전달",
+    "권한 상승 블록 범위를 넓게 잡아 불필요한 로직까지 수행"
+  ],
+  "noncompliant_example": "String readHome() {\n    return AccessController.doPrivileged((PrivilegedAction<String>) () -> System.getProperty(\"user.home\"));\n}",
+  "compliant_example": "Path readConfigDir() {\n    String home = AccessController.doPrivileged((PrivilegedAction<String>) () -> System.getProperty(\"app.config.dir\"));\n    return Path.of(home).normalize();\n}",
+  "fix_guidance": [
+    "[탐지] doPrivileged 또는 유사 권한 상승 블록 사용 위치를 찾는다.",
+    "[판단] 어떤 정보와 객체가 신뢰 경계를 넘어가면 안 되는지 구분한다.",
+    "[수정] privileged 범위를 최소화하고 외부로 반환되는 데이터는 필요한 최소 값으로 정제한다.",
+    "[검증] 권한 없는 호출자가 민감 정보나 객체를 얻지 못하는지 보안 테스트로 확인한다."
+  ],
   "sparrow_mapping": [],
   "keywords": [
-    "SEC00"
+    "privileged-block",
+    "trust-boundary",
+    "sensitive-information"
   ],
   "source_reference": "SEI CERT Oracle Coding Standard for Java public rules page; internal adaptation verification required",
   "confidentiality": "internal",
-  "notes": "Placeholder generated from public CERT Java rule list. Expand summary, examples, and mappings after internal validation. Official CERT risk metadata: severity=Medium, likelihood=Likely, detectable=No, repairable=No, priority=P6, level=L2."
+  "notes": "Expanded draft based on public CERT Java rule title and risk metadata. Internal verification still required."
 }

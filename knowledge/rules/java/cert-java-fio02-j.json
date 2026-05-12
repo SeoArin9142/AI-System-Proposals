@@ -7,19 +7,35 @@
   "classification": "Rule",
   "severity": "Medium",
   "validation_status": "draft-unverified",
-  "summary_ko": "TBD",
-  "intent_ko": "TBD",
-  "domain_context_ko": "TBD",
-  "review_checklist": [],
-  "common_violation_patterns": [],
-  "noncompliant_example": "TBD",
-  "compliant_example": "TBD",
-  "fix_guidance": [],
+  "summary_ko": "파일 관련 작업은 실패 가능성을 명시적으로 탐지하고 적절히 처리해야 한다.",
+  "intent_ko": "파일 열기, 읽기, 쓰기, 이동, 삭제는 환경과 권한에 크게 의존하므로 예외와 반환 상태를 무시하면 데이터 손실이 난다.",
+  "domain_context_ko": "배치 로그, 설정 파일, 임시 산출물 쓰기 실패를 놓치면 운영자는 성공했다고 믿지만 실제 결과물이 남지 않을 수 있다.",
+  "review_checklist": [
+    "파일 열기/읽기/쓰기/삭제/이동 결과가 예외 또는 반환값으로 확인되는가",
+    "부분 쓰기, 디스크 부족, 권한 오류 시 복구 또는 중단 정책이 있는가",
+    "자원 해제가 try-with-resources 등으로 보장되는가",
+    "실패 로그가 운영자가 원인을 추적할 수 있을 정도로 충분한가"
+  ],
+  "common_violation_patterns": [
+    "IOException catch 후 무시",
+    "Files.move/delete 반환/예외를 확인하지 않고 계속 진행",
+    "writer flush/close 실패를 삼킴"
+  ],
+  "noncompliant_example": "void save(Path p, byte[] data) throws IOException {\n    Files.write(p, data);\n    log.info(\"saved\");\n}",
+  "compliant_example": "void save(Path p, byte[] data) throws IOException {\n    try {\n        Files.write(p, data);\n        log.info(\"saved {}\", p);\n    } catch (IOException e) {\n        log.error(\"failed to save {}\", p, e);\n        throw e;\n    }\n}",
+  "fix_guidance": [
+    "[탐지] 파일 API 호출 후 실패 처리 없이 다음 단계로 넘어가는 지점을 찾는다.",
+    "[판단] 실패 시 재시도, 대체 경로, 즉시 중단 중 어떤 정책이 맞는지 정한다.",
+    "[수정] 예외 전파 또는 명시적 오류 처리와 충분한 로깅을 추가한다.",
+    "[검증] 권한 오류, 존재하지 않는 경로, 디스크 부족 조건에서 예상대로 동작하는지 확인한다."
+  ],
   "sparrow_mapping": [],
   "keywords": [
-    "FIO02"
+    "file-io",
+    "error-handling",
+    "try-with-resources"
   ],
   "source_reference": "SEI CERT Oracle Coding Standard for Java public rules page; internal adaptation verification required",
   "confidentiality": "internal",
-  "notes": "Placeholder generated from public CERT Java rule list. Expand summary, examples, and mappings after internal validation. Official CERT risk metadata: severity=Medium, likelihood=Probable, detectable=Yes, repairable=Yes, priority=P12, level=L1."
+  "notes": "Expanded draft based on public CERT Java rule title and risk metadata. Internal verification still required."
 }

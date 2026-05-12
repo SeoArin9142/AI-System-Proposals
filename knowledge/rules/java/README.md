@@ -8,7 +8,7 @@
 validation_status = mixed-draft
 rule_count = 174
 group_count = 19
-expanded_draft_count = 3
+expanded_draft_count = 10
 ```
 
 의미:
@@ -25,6 +25,6 @@ expanded_draft_count = 3
 ## 다음 단계
 
 1. Java 정적분석 도구 export와 mapping 정리
-2. summary_ko / intent_ko / domain_context_ko 작성
+2. 현재 확장된 10건의 summary / example / fix_guidance 현업 검토
 3. 현업 위반 예제 수집
 4. Reviewer benchmark JSONL 생성

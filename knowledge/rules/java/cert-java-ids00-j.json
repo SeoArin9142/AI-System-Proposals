@@ -7,19 +7,35 @@
   "classification": "Rule",
   "severity": "High",
   "validation_status": "draft-unverified",
-  "summary_ko": "TBD",
-  "intent_ko": "TBD",
-  "domain_context_ko": "TBD",
-  "review_checklist": [],
-  "common_violation_patterns": [],
-  "noncompliant_example": "TBD",
-  "compliant_example": "TBD",
-  "fix_guidance": [],
+  "summary_ko": "외부 입력을 SQL 문자열에 직접 결합하지 말고 SQL injection을 방지해야 한다.",
+  "intent_ko": "신뢰할 수 없는 입력이 쿼리 구조를 바꾸지 못하게 해야 하며, 단순 escape에 의존하면 누락 사례가 생긴다.",
+  "domain_context_ko": "관리 도구, 검색 API, 리포트 기능에서 SQL injection이 발생하면 데이터 유출과 권한 상승으로 바로 이어질 수 있다.",
+  "review_checklist": [
+    "사용자 입력이 SQL 문자열 연결 또는 포맷팅으로 직접 삽입되는가",
+    "PreparedStatement 등 파라미터 바인딩을 사용하고 있는가",
+    "테이블명/정렬키처럼 식별자 입력은 allowlist로 제한되는가",
+    "ORM/DSL을 쓰더라도 원시 쿼리 우회 경로가 없는가"
+  ],
+  "common_violation_patterns": [
+    "WHERE 절에 사용자 입력을 문자열 더하기로 삽입",
+    "ORDER BY 컬럼명을 요청 파라미터에서 직접 사용",
+    "검색 조건 escape 유틸만 믿고 raw SQL 조립"
+  ],
+  "noncompliant_example": "String sql = \"SELECT * FROM users WHERE name = '\" + user + \"'\";\nstmt.executeQuery(sql);",
+  "compliant_example": "PreparedStatement ps = conn.prepareStatement(\"SELECT * FROM users WHERE name = ?\");\nps.setString(1, user);\nps.executeQuery();",
+  "fix_guidance": [
+    "[탐지] SQL 조립 코드에서 외부 입력이 문자열로 결합되는 지점을 찾는다.",
+    "[판단] 값 바인딩으로 해결 가능한지, 식별자 입력은 allowlist가 필요한지 구분한다.",
+    "[수정] PreparedStatement/ORM 파라미터 바인딩을 사용하고 식별자 입력은 허용 목록으로 제한한다.",
+    "[검증] 따옴표, 주석, UNION, ORDER BY 변형 입력으로 쿼리 구조가 변하지 않는지 테스트한다."
+  ],
   "sparrow_mapping": [],
   "keywords": [
-    "IDS00"
+    "sql-injection",
+    "prepared-statement",
+    "allowlist"
   ],
   "source_reference": "SEI CERT Oracle Coding Standard for Java public rules page; internal adaptation verification required",
   "confidentiality": "internal",
-  "notes": "Placeholder generated from public CERT Java rule list. Expand summary, examples, and mappings after internal validation. Official CERT risk metadata: severity=High, likelihood=Likely, detectable=Yes, repairable=No, priority=P18, level=L1."
+  "notes": "Expanded draft based on public CERT Java rule title and risk metadata. Internal verification still required."
 }

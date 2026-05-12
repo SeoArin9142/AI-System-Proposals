@@ -7,19 +7,35 @@
   "classification": "Rule",
   "severity": "High",
   "validation_status": "draft-unverified",
-  "summary_ko": "TBD",
-  "intent_ko": "TBD",
-  "domain_context_ko": "TBD",
-  "review_checklist": [],
-  "common_violation_patterns": [],
-  "noncompliant_example": "TBD",
-  "compliant_example": "TBD",
-  "fix_guidance": [],
+  "summary_ko": "클래스 비교는 이름 문자열이 아니라 Class 객체 자체를 기준으로 해야 한다.",
+  "intent_ko": "클래스 이름 문자열 비교는 클래스 로더, 리팩터링, 패키지 변경에 취약하고 타입 안정성이 없다.",
+  "domain_context_ko": "플러그인, 직렬화, 메시지 라우팅 코드에서 클래스 이름 문자열 비교를 쓰면 잘못된 타입 분기가 발생할 수 있다.",
+  "review_checklist": [
+    "클래스 동등성 판단을 getName()/getSimpleName() 문자열 비교로 하고 있는가",
+    "클래스 로더 차이나 리네이밍에 영향을 받지 않도록 Class 객체로 비교하는가",
+    "isAssignableFrom, ==, equals 중 의도에 맞는 방법을 선택했는가",
+    "직렬화/리플렉션 코드에서 문자열 기반 분기 대신 타입 기반 분기를 쓸 수 있는가"
+  ],
+  "common_violation_patterns": [
+    "obj.getClass().getName().equals(...)",
+    "simpleName 기반 타입 분기",
+    "패키지명 포함 문자열 상수와 클래스 이름 비교"
+  ],
+  "noncompliant_example": "if (obj.getClass().getName().equals(\"com.example.AdminTask\")) {\n    handleAdmin();\n}",
+  "compliant_example": "if (obj.getClass() == AdminTask.class) {\n    handleAdmin();\n}",
+  "fix_guidance": [
+    "[탐지] 클래스 이름 문자열 비교를 사용하는 타입 분기 지점을 찾는다.",
+    "[판단] 정확한 동일 타입 비교인지, 하위 타입 허용 비교인지 목적을 정한다.",
+    "[수정] ==, equals, isAssignableFrom 등 Class 기반 비교로 교체한다.",
+    "[검증] 리팩터링, 패키지 이동, 하위 타입 입력에서도 분기가 의도대로 유지되는지 확인한다."
+  ],
   "sparrow_mapping": [],
   "keywords": [
-    "OBJ09"
+    "class-comparison",
+    "reflection",
+    "type-safety"
   ],
   "source_reference": "SEI CERT Oracle Coding Standard for Java public rules page; internal adaptation verification required",
   "confidentiality": "internal",
-  "notes": "Placeholder generated from public CERT Java rule list. Expand summary, examples, and mappings after internal validation. Official CERT risk metadata: severity=High, likelihood=Unlikely, detectable=Yes, repairable=No, priority=P6, level=L2."
+  "notes": "Expanded draft based on public CERT Java rule title and risk metadata. Internal verification still required."
 }
