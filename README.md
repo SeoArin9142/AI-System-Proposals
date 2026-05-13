@@ -31,6 +31,7 @@
 ## 바로 보면 되는 문서
 
 - [핵심 본문 문서](docs/internal-closed-network-ai-system.md)
+- [사내 망 구축 설계 참고서](docs/internal-network-infrastructure-design.md)
 - [외부망 연계형 문서](docs/external-connected-ai-system.md)
 - [발표용 PPT](presentations/issue-170-internal-ai-system-proposal.pptx)
 - [규칙 데이터 / pack 구조](pack/README.md)
@@ -47,6 +48,7 @@
 
 ### 상세 문서
 - [폐쇄망 AI 개발지원 시스템 구축 검토안](docs/internal-closed-network-ai-system.md)
+- [사내 AI 구축을 위한 내부망 인프라 설계안](docs/internal-network-infrastructure-design.md)
 - [외부망 연계 AI 개발지원 시스템 구축 검토안](docs/external-connected-ai-system.md)
 
 ### 발표자료
